@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Baltic Coast — Gdańsk & Surroundings</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    /* ── PRESET 04 — ARID / DUST / SACRED ── */
+    --bg:         #0F0C08;
+    --bg2:        #1C1510;
+    --text:       #F4F0E8;
+    --text-muted: #8A7A6A;
+    --accent:     #C8924A;
+    --accent2:    #8A4A1C;
+    background-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    display: inline-block;
+    padding: 6px 16px;
+  }
+  .counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--text-muted);
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 88px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.0;
+    color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace;
+    font-size: 68px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.05;
+    color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.1;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    color: var(--text); opacity: .5;
+    letter-spacing: .04em;
+  }
+
+  .row { display: flex; align-items: center; justify-content: space-between; }
+  .col { display: flex; flex-direction: column; }
+  .gap-16 { gap: 16px; }
+  .gap-24 { gap: 24px; }
+  .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+
+  .divider        { width:100%; height:1px; background:var(--accent); opacity:.3; }
+  .divider-strong { width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  .photo1 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/1.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo3 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/3b.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo4 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/4.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo5 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/5.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo6 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/6.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo7 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/7.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+  .photo-label {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(200,146,74,.3);
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .overlay {
+    position: absolute;
+    bottom:0; left:0; right:0;
+    pointer-events: none;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; flex:1;
+  }
+  .field-cell {
+    border:1px solid rgba(200,146,74,.2);
+    padding:24px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .field-label {
+    font-family:'Space Mono',monospace;
+    font-size:16px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent);
+  }
+  .field-value {
+    font-family:'Space Mono',monospace;
+    font-size:22px; font-weight:700;
+    color:var(--text); line-height:1.4;
+  }
+
+  /* budget */
+  .budget-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(200,146,74,.15);
+    gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(200,146,74,.15); }
+  .budget-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--text); opacity: .8; flex:1;
+  }
+  .budget-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px; font-weight: 700;
+    color: var(--accent); text-align: right; min-width: 130px;
+  }
+  .budget-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 24px;
+    background: var(--bg2);
+    border: 1px solid rgba(200,146,74,.4);
+    margin-top: 16px;
+  }
+  .budget-total-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text);
+  }
+  .budget-total-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px; font-weight: 700;
+    color: var(--accent);
+  }
+
+  .qr-placeholder {
+    width:380px; height:380px; flex-shrink:0;
+    border:1px solid rgba(200,146,74,.4);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:16px;
+    background-image: var(--qr-url, none);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    --qr-url: url('img/qrcode.png')
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 01 — COVER
+     → --photo-url: url('cover.jpg') — Gdańsk waterfront or Stocznia at night
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-01">
+  <div class="photo1" style="height:1350px;">
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:900px;
+    background:linear-gradient(to top,#0F0C08 55%,rgba(15,12,8,.7) 80%,transparent);"></div>
+  <div class="safe col gap-48"">
+    <div class="row">
+      <span class="tag">[BALTIC COAST]</span>
+      <span class="counter">SLIDE 01 / 10</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;
+        letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+        POLSKA
+      </div>
+      <div class="title-display">GDAŃSK<br>SOPOT<br>GDYNIA</div>
+      <div class="subtitle" style="margin-top:8px;">September 11–15, 2026</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">BGY → GDN · 21:15</div>
+        <div class="data-text">~€515 / PERSON</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 02 — ROUTE & PLAN
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">SLIDE 02 / 10</span>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label">5 DAYS · 4 NIGHTS</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Sep 11</strong> — 09:40 Flight BGY→GDN · Arrival 11:45 · Check-in Gdańsk<br>
+        <strong>Sep 12</strong> — Falowiec przymorze · Nowy Port · Historical Lighthouse · Stocznia shipyards · ECS<br>
+        <strong>Sep 13</strong> — Sopot · Molo w Sopocie · Drive to Gdynia · Orłowo cliffs<br>
+        <strong>Sep 14</strong> — Słowiński National Park · Wydma Łącka moving dunes · Łeba<br>
+        <strong>Sep 15</strong> — Sztutowo · Stutthof memorial · Mikoszewo estuary · Amber hunting · 20:10 GDN→BGY
+      </div>
+    </div>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <div class="body-text">
+        Car rental from <strong>Sep 13</strong> · Europcar GDN airport ·
+        Return Sep 15 before 18:00
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">3 CITIES · 1 NATIONAL PARK · 1 MEMORIAL SITE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 03 — SPOTLIGHT: STOCZNIA / ECS
+     → --photo-url: url('stocznia.jpg') — shipyard gates or ECS building
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-03">
+  <div class="photo3" style="height:750px;">
+</div>
+  <div class="overlay" style="height:800px;
+    background:linear-gradient(to top,#0F0C08 58%,transparent);"></div>
+  <div class="safe col"">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[SPOTLIGHT · SOLIDARITY]</span>
+      <span class="counter">SLIDE 03 / 10</span>
+    </div>
+      <div class="title-large">STOCZNIA<br>GDAŃSKA</div>
+      <div class="body-text">
+        The shipyard where <strong>Solidarność</strong> was born in 1980.
+        European Solidarity Centre (ECS) — permanent exhibition on
+        the fall of communism. Raw industrial architecture,
+        original crane structures still standing.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">ECS · TUE–SUN 10:00–19:00 · ~€10</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 04 — LOCAL EXPERIENCE: FALOWIEC
+     → --photo-url: url('falowiec.jpg') — aerial or street-level facade
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="photo4" style="height:720px;">
+  </div>
+  <div class="overlay" style="height:770px;
+    background:linear-gradient(to top,#0F0C08 57%,transparent);"></div>
+  <div class="safe col"">
+    <div class="col gap-24 mt-auto">
+      <br>
+      <div class="row">
+        <span class="tag">[LOCAL]</span>
+        <span class="counter">SLIDE 04 / 10</span>
+      </div>
+      <div class="title-large">FALOWIEC<br>PRZYMORZE</div>
+      <div class="body-text">
+        860 metres of unbroken prefab concrete, one of the
+        longest residential blocks in Europe.
+        <strong>~6,000 people</strong> still live here.
+        Nobody is visiting. That's the point.
+        <strong>Nearby:</strong> head east to Nowy Port to see the 1894 brick lighthouse 
+        overlooking the industrial harbor.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">OBROŃCÓW WYBRZEŻA · TRAM 8, 13</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 05 — SPOTLIGHT: SŁOWIŃSKI & WYDMA ŁĄCKA
+     → --photo-url: url('dune.jpg') — moving dunes landscape
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-05">
+  <div class="overlay" style="height:820px;
+    background:linear-gradient(to top,#0F0C08 60%,transparent);"></div>
+  <div class="safe col"">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[NATIONAL PARK]</span>
+      <span class="counter">SLIDE 05 / 10</span>
+    </div>
+      <div class="title-large">WYDMA<br>ŁĄCKA</div>
+      <div class="body-text">
+        Moving sand dunes shifting up to <strong>10m per year</strong>,
+        swallowing entire forests. Unique landscape between
+        Lake Łebsko and the Baltic Sea. Access on foot,
+        bike or electric shuttle from Łeba.
+        <strong>~1h 20min</strong> drive from Gdynia.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">SŁOWIŃSKI NP · ENTRY ~€4 · ŁEBA PARKING</div>
+    </div>
+  </div>
+    <div class="photo5" style="height:780px;">
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 06 — SPOTLIGHT: STUTTHOF & MIKOSZEWO
+     → --photo-url: url('stutthof.jpg') — memorial or Vistula estuary
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="photo6" style="height:720px;">
+  </div>
+  <div class="overlay" style="height:770px;
+    background:linear-gradient(to top,#0F0C08 57%,transparent);"></div>
+  <div class="safe col"">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[MEMORY]</span>
+      <span class="counter">SLIDE 06 / 10</span>
+    </div>
+      <div class="title-large">SZTUTOWO<br>STUTTHOF</div>
+      <div class="body-text">
+        First Nazi concentration camp established outside
+        Germany (Sep 1939). <strong>~2h visit</strong> — allow time.
+        Afternoon detour to Mikoszewo: the Vistula
+        meeting the Baltic, flat horizon, no crowds.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">SZTUTOWO · FREE ENTRY · CHECK HOURS BEFORE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 07 — LOCAL EXPERIENCE: RACCOLTA DELL'AMBRA
+     → --photo-url: url('amber.jpg') — ammber
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-07">
+  <div class="photo7" style="height:720px;">
+  </div>
+  <div class="overlay" style="height:770px;
+    background:linear-gradient(to top,#0F0C08 57%,transparent);"></div>
+  <div class="safe col"">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[LOCAL]</span>
+      <span class="counter">SLIDE 07 / 10</span>
+    </div>
+      <div class="title-large">HUNT FOR <br>AMBER</div>
+      <div class="body-text">
+        After Stutthof, head to the Baltic shore at Mikoszewo or Jantar.
+        Walk the waterline and look for <strong>small pieces of amber</strong> mixed with seaweed, 
+        driftwood and fine debris washed ashore by the waves.
+        The best finds often come after rough weather, 
+        when the sea has just rearranged the shoreline.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BALTIC COAST · LOOK LOW. WALK SLOW.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 07 — FIELD NOTES
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">SLIDE 08 / 10</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">FLIGHT</div>
+        <div class="field-value">Ryanair<br>BGY↔GDN<br>~€80 total</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CAR RENTAL</div>
+        <div class="field-value">Europcar<br>GDN airport<br>Sep 13–15 · ~€120</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">PLN<br>1€ ≈ 4.25<br>Card OK everywhere</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">14–20°C<br>Windproof jacket<br>Baltic can be cold</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APPS</div>
+        <div class="field-value">Bolt / Uber<br>Google Maps<br>Jakdojade (GDN)</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">AIRPORT</div>
+        <div class="field-value">Ławica GDN<br>SKM train or Bolt<br>~25 min centre</div>
+      </div>
+    </div>
+    <br>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">PARKING BGY · ORIO20 · 4 NIGHTS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 08 — BUDGET
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-09">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[BUDGET]</span>
+      <span class="counter">SLIDE 09 / 10</span>
+    </div>
+    <div class="col gap-16">
+      <div class="title-large">5-DAY<br>BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif;font-size:22px;
+        color:var(--text);opacity:.45;letter-spacing:.04em;">
+        Estimated per person · all costs included
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="budget-row">
+        <div class="budget-label">Ryanair flights A/R</div>
+        <div class="budget-amount">€ 80</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation (4 nights)</div>
+        <div class="budget-amount">€ 190</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Car rental (Sep 13–15)(To be divided if not solo travel)</div>
+        <div class="budget-amount">€ 120</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food & transport</div>
+        <div class="budget-amount">~ € 125</div>
+      </div>
+      <div class="budget-total">
+        <div class="budget-total-label">TOTAL / PERSON</div>
+        <div class="budget-total-amount">~ € 515</div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">JANDASSS.ROUTE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 09 — MAP QR
+     → Sostituisci --qr-url: url('qr-danzica.png') quando hai il QR
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-10">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[MAP]</span>
+      <span class="counter">SLIDE 10 / 10</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:48px;">
+      <div class="col gap-16">
+        <div class="title-large">SCAN<br>THE MAP</div>
+        <div class="body-text">
+          Every stop, road and coordinate
+          from this trip saved on Google Maps.
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:48px;">
+        <div class="qr-placeholder">
+          <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;
+            letter-spacing:.12em;text-transform:uppercase;
+            color:rgba(200,146,74,.35);text-align:center;line-height:1.6;">
+          </div>
+        </div>
+        <div class="col gap-24" style="flex:1;">
+          <div class="data-text">BALTIC COAST<br>GDAŃSK & SURROUNDINGS</div>
+          <div class="divider"></div>
+          <div class="body-text" style="font-size:22px;">
+            Gdańsk · Sopot · Gdynia<br>
+            Sep 11–15, 2026
+          </div>
+          <div class="body-text" style="font-size:20px;opacity:.5;">
+            Stutthof: allow 2h.<br>
+            Dunes: go early,<br>
+            gets crowded by noon.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider"></div>
+      <div class="row">
+        <div class="data-text">JANDASSS.ROUTE</div>
+        <div class="counter">@jandasss.route</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

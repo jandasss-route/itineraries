@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLSKA: NOC ŚWIĘTYCH — JANDASSS.ROUTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── PAGE TOKENS ── */
+:root {
+  --page-bg:      #060608;
+  --page-accent:  #A084E8;
+  --page-text:    #E8E4F4;
+  --page-muted:   #6A5A8A;
+  --grid-line:    rgba(160, 132, 232, .055);
+  --grid-coord:   rgba(160, 132, 232, .18);
+  --font-mono:    'Space Mono', monospace;
+}
+
+/* ── BASE ── */
+body {
+  background: var(--page-bg);
+  color: var(--page-text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── COORDINATE GRID ── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--grid-line) 0px, var(--grid-line) 1px,
+    transparent 1px, transparent 80px
+  );
+}
+.grid-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--grid-line) 0px, var(--grid-line) 1px,
+    transparent 1px, transparent 80px
+  );
+}
+.coord-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--grid-coord);
+  letter-spacing: .08em;
+  user-select: none;
+  pointer-events: none;
+  opacity: .5;
+}
+
+/* ── SITE HEADER ── */
+.site-header {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--page-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .15s;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--page-accent); }
+.back-link::before {
+  content: '←';
+  font-size: 14px;
+}
+.header-meta {
+  text-align: right;
+}
+.header-title {
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 2vw, 16px);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--page-accent);
+  line-height: 1.3;
+}
+.header-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--page-muted);
+  margin-top: 4px;
+}
+
+.header-divider {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+.header-divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--page-accent);
+  opacity: .2;
+}
+
+/* ── SLIDE GALLERY ── */
+.gallery {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 0 24px 80px;
+}
+
+/* ── SLIDE WRAPPER: scales the 1080x1350 slide to fit viewport ── */
+.slide-wrap {
+  /* max display width for the card */
+  --card-max: min(860px, calc(100vw - 48px));
+  --scale: calc(var(--card-max) / 1080px);
+
+  width: 1080px;
+  height: 1350px;
+  transform: scale(var(--scale));
+  transform-origin: top center;
+  /* collapsed height = scaled height */
+  margin-bottom: calc(1350px * var(--scale) - 1350px);
+
+  /* card shadow & border */
+  box-shadow:
+    0 0 0 1px rgba(160, 132, 232, .12),
+    0 32px 80px rgba(0,0,0,.6);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── SLIDE NUMBER LABEL ── */
+.slide-number {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--page-muted);
+  opacity: .5;
+  width: min(860px, calc(100vw - 48px));
+  text-align: left;
+  padding: 0 4px;
+  margin-bottom: -32px;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  border-top: 1px solid rgba(160, 132, 232, .12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-brand {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--page-muted);
+  opacity: .5;
+}
+.footer-ig {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--page-muted);
+  opacity: .4;
+  text-decoration: none;
+}
+.footer-ig:hover { opacity: .8; color: var(--page-accent); }
+
+/* ── ORIGINAL SLIDE CSS (scoped to .slide) ── */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    /* ── PRESET 06 — NIGHT / UNDERGROUND / ELECTRIC ── */
+    --bg:         #060608;
+    --bg2:        #0E0C14;
+    --text:       #E8E4F4;
+    --text-muted: #6A5A8A;
+    --accent:     #A084E8;
+    --accent2:    #E84084;
+    background-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TIPO ── */
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    display: inline-block;
+    padding: 6px 16px;
+  }
+  .counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--text-muted);
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 88px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.0;
+    color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace;
+    font-size: 68px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.05;
+    color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em; line-height: 1.1;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    color: var(--text); opacity: .5;
+    letter-spacing: .04em;
+  }
+
+  /* ── LAYOUT ── */
+  .row { display: flex; align-items: center; justify-content: space-between; }
+  .col { display: flex; flex-direction: column; }
+  .gap-8  { gap: 8px; }
+  .gap-16 { gap: 16px; }
+  .gap-24 { gap: 24px; }
+  .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+
+  .divider       { width:100%; height:1px; background:var(--accent); opacity:.3; }
+  .divider-warm  { width:100%; height:1px; background:var(--accent2); opacity:.5; }
+  .divider-strong{ width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  /* ── FOTO PLACEHOLDER ── */
+  .photo1 {
+    background-color: #d6a02d;
+    background-image: var(--photo-url, url('img/1.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo3 {
+    background-color: #d6a02d;
+    background-image: var(--photo-url, url('img/3.jpeg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo4 {
+    background-color: #d6a02d;
+    background-image: var(--photo-url, url('img/4.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo5 {
+    background-color: #d6a02d;
+    background-image: var(--photo-url, url('img/5.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+    .photo6 {
+    background-color: #d6a02d;
+    background-image: var(--photo-url, url('img/6.jpg'));
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top:0; left:0; right:0;
+  }
+  .photo-label {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(160,132,232,.3);
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* overlay sfumato per slide con foto */
+  .overlay {
+    position: absolute;
+    bottom:0; left:0; right:0;
+    pointer-events: none;
+  }
+
+  /* ── BOX & GRID ── */
+  .box { border:1px solid rgba(160,132,232,.3); padding:24px; }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; flex:1;
+  }
+  .field-cell {
+    border:1px solid rgba(160,132,232,.2);
+    padding:24px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .field-label {
+    font-family:'Space Mono',monospace;
+    font-size:16px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent);
+  }
+  .field-value {
+    font-family:'Space Mono',monospace;
+    font-size:22px; font-weight:700;
+    color:var(--text); line-height:1.4;
+  }
+  .cta-box {
+    border:1px solid var(--accent);
+    padding:20px 32px;
+    display:inline-flex; align-items:center;
+  }
+  .cta-text {
+    font-family:'Space Mono',monospace;
+    font-size:24px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  /* ── ACCENT2 (magenta) — usato solo dove ha senso ── */
+  .hot { color: var(--accent2); }
+  .border-hot { border-color: var(--accent2) !important; }
+
+    /* ── BUDGET TABLE ── */
+  .budget-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+  }
+  .budget-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(160,132,232,.15);
+    gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(160,132,232,.15); }
+  .budget-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text);
+    opacity: .8;
+    flex: 1;
+  }
+  .budget-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: right;
+    min-width: 120px;
+  }
+ 
+  /* ── TOTAL ROW ── */
+  .budget-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 24px;
+    background: var(--bg2);
+    border: 1px solid rgba(160,132,232,.4);
+    margin-top: 16px;
+  }
+  .budget-total-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .budget-total-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+
+/* Override body styles from original */
+body { background: var(--page-bg) !important; }
+
+</style>
+</head>
+<body>
+
+<div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a class="back-link" href="../index.html">JANDASSS.ROUTE</a>
+  <div class="header-meta">
+    <div class="header-title">POLSKA: NOC ŚWIĘTYCH</div>
+    <div class="header-date">OCT 31 – NOV 3, 2025</div>
+  </div>
+</header>
+<div class="header-divider"><div class="header-divider-line"></div></div>
+
+<!-- SLIDE GALLERY -->
+<main class="gallery" id="gallery">
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 01 — COVER
+     Foto consigliata: panoramica di Poznań di notte o al tramonto
+     → style="--photo-url: url('cover.jpg')" sul div.photo
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-01">
+  <div class="photo1" style="height:1350px;">
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:900px;
+    background:linear-gradient(to top,#060608 55%,rgba(6,6,8,.7) 80%,transparent);"></div>
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[NOC ŚWIĘTYCH]</span>
+      <span class="counter">SLIDE 01 / 09</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;
+        letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+        POLSKA
+      </div>
+      <div class="title-display">POZNAŃ<br>BYDGOSZCZ<br>TORUŃ</div>
+      <div class="subtitle" style="margin-top:8px;">October 31 – November 3, 2026</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">BGY → POZ · 06:35</div>
+        <div class="data-text">~€295 / PERS.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 02 — ROTTA & PIANO
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">SLIDE 02 / 09</span>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label">4 DAYS · 3 NIGHTS</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Oct 31</strong> — Flight BGY→POZ 06:35 · Poznań · Evening train to Bydgoszcz<br>
+        <strong>Nov 1</strong> — Bydgoszcz · Brda canals · Noc Świętych at the Cmentarz<br>
+        <strong>Nov 2</strong> — IC to Toruń (35 min) · UNESCO old town · Back to Poznań<br>
+        <strong>Nov 3</strong> — Tumski Cathedral · Bus 159 → Ławica · POZ→BGY 12:00
+      </div>
+    </div>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>PKP trains</strong>: POZ→BYD 1h 40min ·
+        BYD→TOR 35 min · TOR→POZ 1h 30min
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">3 CITIES · 4 TRAINS · 1 RETURN FLIGHT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 03 — SPOTLIGHT: BYDGOSZCZ
+     Foto consigliata: canali Brda o Wyspa Młyńska
+     → --photo-url: url('bydgoszcz-canali.jpg')
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-03">
+  <div class="photo3" style="height:750px;">
+  </div>
+  <div class="overlay" style="height:800px;
+    background:linear-gradient(to top,#060608 58%,transparent);"></div>
+  <div class="safe col gap-48">
+    <div class="col gap-24 mt-auto">
+      <div class="row">
+        <span class="tag">[CANALS]</span>
+        <span class="counter">SLIDE 03 / 09</span>
+      </div>
+      <div class="title-large">WYSPA<br>MŁYŃSKA</div>
+      <div class="body-text">
+        Mill Island on the Brda river. Historic <strong>18th-century red brick
+        mills</strong> built to connect the Vistula and Oder basins.
+        Reflections on the water, cast-iron bridges, city park.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BYDGOSZCZ · FREE ENTRY</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 04 — LOCAL EXPERIENCE: NOC ŚWIĘTYCH
+     Foto consigliata: candele al cimitero — elemento principale del viaggio
+     → --photo-url: url('noc-swietych.jpg')
+     NOTA: questa è la slide chiave — scegli la tua foto migliore
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-04">
+  <div class="photo4" style="height:780px;">
+  </div>
+  <div class="overlay" style="height:820px;
+    background:linear-gradient(to top,#060608 60%,rgba(6,6,8,.3) 85%,transparent);"></div>
+  <div class="safe col gap-48">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag" style="color:var(--accent2);border-color:var(--accent2);">[NOC ŚWIĘTYCH]</span>
+      <span class="counter">SLIDE 04 / 09</span>
+    </div>
+      <div class="title-medium" style="color:var(--accent2);">CMENTARZ<br>STAROFARNY</div>
+      <div class="body-text">
+        November 1st · sunset at <strong>4:30 PM</strong>.
+        Thousands of <strong>znicze</strong> — red and golden votives —
+        lit across the graves between monumental trees.
+        Silence, first frost, Polish cultural memory at its rawest.
+      </div>
+      <div class="divider-warm"></div>
+      <div class="data-text hot">CANDLES LIT FROM 16:30</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 05 — SPOTLIGHT: TORUŃ UNESCO
+     Foto consigliata: mura gotiche o cattedrale
+     → --photo-url: url('torun-gotico.jpg')
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-05">
+  <div class="photo5" style="height:720px;">
+  </div>
+  <div class="overlay" style="height:770px;
+    background:linear-gradient(to top,#060608 57%,transparent);"></div>
+  <div class="safe col gap-48">
+    <div class="col gap-24 mt-auto">
+      <div class="row">
+        <span class="tag">[UNESCO]</span>
+        <span class="counter">SLIDE 05 / 09</span>
+      </div>
+      <div class="title-large">TORUŃ<br>GOTHIC</div>
+      <div class="body-text">
+        The only Polish city to survive WWII intact.
+        <strong>Backsteingotik</strong> from the 14th century: walls,
+        leaning towers, red brick churches. Birthplace of
+        <strong>Copernicus</strong> (1473). Pierniki workshop — a living
+        gingerbread tradition since the 14th century.
+      </div>
+      <div class="divider"></div>
+      <div class="row">
+        <div class="data-text">IC BYD→TOR · 35 MIN · ~€4</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 06 — SPOTLIGHT: POZNAŃ
+     Foto consigliata: Rynek di Poznań o Stare Miasto
+     → --photo-url: url('poznan-rynek.jpg')
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="photo6" style="height:700px;">
+  </div>
+  <div class="overlay" style="height:760px;
+    background:linear-gradient(to top,#060608 56%,transparent);"></div>
+  <div class="safe col gap-48">
+    <div class="col gap-24 mt-auto">
+      <div class="row">
+        <span class="tag">[MEDIEVAL]</span>
+        <span class="counter">SLIDE 06 / 09</span>
+      </div>
+      <div class="title-large">POZNAŃ<br>RYNEK</div>
+      <div class="body-text">
+        Renaissance Town Hall by <strong>Giovanni Battista di Quadro</strong>
+        with arcaded loggia and clock tower. Tumski Island:
+        10th-century cathedral, baptism site of Mieszko I.
+        Śródka quarter — timber-framed houses on the riverbank.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">52.4064° N · 16.9252° E</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 07 — FIELD NOTES
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-07">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">SLIDE 07 / 09</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">FLIGHT</div>
+        <div class="field-value">Ryanair<br>BGY↔POZ<br>~€48</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">PKP TRAINS</div>
+        <div class="field-value">IC · ~€27<br>KOLEO / PKP<br>app required</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">PLN<br>1€ ≈ 4.25<br>Card OK everywhere</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">2–10°C<br>Layers + raincoat<br>Sunset 16:15</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APP</div>
+        <div class="field-value">PKP / KOLEO<br>Jakdojade<br>Bolt / Uber</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">AIRPORT</div>
+        <div class="field-value">Ławica POZ<br>Bus 159<br>~20 min centre</div>
+      </div>
+    </div>
+    <br>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">4-DAY BUDGET · ~€295–310 / PERS.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 08 — BUDGET
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-budget">
+  <div class="safe">
+    <div class="row">
+      <span class="tag">[BUDGET]</span>
+      <span class="counter">SLIDE 08 / 09</span>
+    </div>
+     <br>
+    <div class="col" style="gap:16px;">
+      <div class="title-large">4-DAY BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif;font-size:22px;color:var(--text);opacity:.45;letter-spacing:.04em;">
+        Estimated per person · Ryanair + PKP Intercity
+      </div>
+          <br>
+    </div>
+ 
+    <div class="budget-table">
+      <div class="budget-row">
+        <div class="budget-label">Ryanair flights A/R</div>
+        <div class="budget-amount">€ 48</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">PKP Intercity trains</div>
+        <div class="budget-amount">€ 27</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Local transport</div>
+        <div class="budget-amount">€ 8</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation (3 nights)</div>
+        <div class="budget-amount">€ 115</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food, coffee & attractions</div>
+        <div class="budget-amount">€ 100</div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="budget-total">
+        <div class="budget-total-label">ESTIMATED TOTAL</div>
+        <div class="budget-total-amount">~ € 298</div>
+      </div>
+    </div>
+     <br>    
+     <br>
+     <br>
+    <div class="mt-auto col" style="gap:16px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;letter-spacing:.1em;color:var(--text-muted);">@jandasss.route</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 09 — CALL TO ACTION
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[MAP]</span>
+      <span class="counter">SLIDE 09 / 09</span>
+    </div>
+ 
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:48px;">
+ 
+      <div class="col gap-16">
+        <div class="title-large">SCAN<br>THE MAP</div>
+        <div class="body-text">
+          Every stop, train and coordinate
+          from this trip saved on Google Maps.
+        </div>
+      </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:48px;">
+        <div class="qr-placeholder" style="
+          width: 380px; height: 380px;
+          flex-shrink: 0;
+          border: 1px solid rgba(55, 15, 158, 0.4);
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          gap: 16px;
+          background-image: var(--qr-url, 'qrcode.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          --qr-url: url('img/qrcode.png')
+        ">
+        </div>
+ 
+        <div class="col gap-24" style="flex:1;">
+          <div class="data-text">POLSKA<br>NOC ŚWIĘTYCH</div>
+          <div class="divider"></div>
+          <div class="body-text" style="font-size:22px;">
+            Poznań · Bydgoszcz · Toruń<br>
+            Oct 31 – Nov 3, 2026
+          </div>
+          <div class="body-text" style="font-size:20px;opacity:.5;">
+            At the cemetery:<br>
+            bring PLN cash<br>
+            for the znicze.
+          </div>
+        </div>
+      </div>
+     <div class="mt-auto col gap-16">
+      <div class="divider"></div>
+      <div class="row">
+        <div class="counter">@jandasss.route</div>
+      </div>
+    </div>
+    </div>
+ 
+  </div>
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span class="footer-brand">JANDASSS.ROUTE</span>
+  <a class="footer-ig" href="https://instagram.com/jandasss.route" target="_blank" rel="noopener">@jandasss.route</a>
+</footer>
+
+<script>
+/* ── coordinate grid labels ── */
+(function() {
+  const container = document.getElementById('grid-bg');
+  const STEP = 80;
+  const W = window.innerWidth;
+  const H = Math.max(document.body.scrollHeight, window.innerHeight * 3);
+  const cols = Math.floor(W / STEP);
+  const rows = Math.floor(H / STEP) + 2;
+  const LAT_START = 44.0, LAT_RANGE = 12;
+  const LNG_START = 14.0, LNG_RANGE = 20;
+  for (let r = 0; r <= rows; r += 4) {
+    for (let c = 0; c <= cols; c += 4) {
+      const x = c * STEP, y = r * STEP;
+      const lat = (LAT_START + LAT_RANGE * (1 - y / H)).toFixed(2);
+      const lng = (LNG_START + LNG_RANGE * (x / W)).toFixed(2);
+      const label = (c % 8 === 0) ? lat + '°N' : lng + '°E';
+      const el = document.createElement('span');
+      el.className = 'coord-label';
+      el.textContent = label;
+      el.style.left = (x + 3) + 'px';
+      el.style.top  = (y + 3) + 'px';
+      container.appendChild(el);
+    }
+  }
+})();
+
+/* ── inject slide number labels before each .slide-wrap ── */
+(function() {
+  const gallery = document.getElementById('gallery');
+  const slides = gallery.querySelectorAll('.slide');
+  slides.forEach((slide, i) => {
+    const label = document.createElement('div');
+    label.className = 'slide-number';
+    label.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    gallery.insertBefore(label, slide);
+    // wrap slide in .slide-wrap
+    const wrap = document.createElement('div');
+    wrap.className = 'slide-wrap';
+    slide.parentNode.insertBefore(wrap, slide);
+    wrap.appendChild(slide);
+  });
+})();
+</script>
+
+</body>
+</html>

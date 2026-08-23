@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JANDASSS.ROUTE — Field Notes & Urban Routes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── TOKENS ── */
+:root {
+  --bg:           #111315;
+  --surface:      #141416;
+  --text:         #F4F4F5;
+  --text-muted:   #8A6A50;
+  --text-dim:     #3A2A1E;
+  --accent:       #E07A5F;
+  --accent2:      #D00000;
+  --border:       rgba(224,122,95,.18);
+  --grid-line:    rgba(224,122,95,.055);
+  --font-mono:    'Space Mono', monospace;
+  --font-body:    'Inter', sans-serif;
+}
+
+/* ── BASE ── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── COORDINATE GRID BACKGROUND ── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* vertical lines */
+.grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--grid-line) 0px,
+    var(--grid-line) 1px,
+    transparent 1px,
+    transparent 80px
+  );
+}
+
+/* horizontal lines */
+.grid-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--grid-line) 0px,
+    var(--grid-line) 1px,
+    transparent 1px,
+    transparent 80px
+  );
+}
+
+/* coordinate labels — generated via JS */
+.coord-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: .08em;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── LAYOUT ── */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── HEADER ── */
+header {
+  padding-top: clamp(64px, 10vw, 120px);
+  padding-bottom: 64px;
+}
+
+.header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+  opacity: .6;
+}
+
+.header-logo {
+  font-family: var(--font-mono);
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+.header-logo span {
+  color: var(--accent);
+}
+
+.header-bio {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.7;
+  color: var(--text);
+  opacity: .6;
+  max-width: 480px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 48px 0;
+}
+.divider-accent {
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+  opacity: .5;
+  margin: 48px 0;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+/* ── ITINERARY LIST ── */
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.itinerary-item {
+  display: block;
+  text-decoration: none;
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+  transition: background .15s;
+  position: relative;
+  cursor: pointer;
+}
+.itinerary-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+.itinerary-item:hover .item-title {
+  color: var(--accent);
+}
+.itinerary-item:hover .item-arrow {
+  transform: translateX(4px);
+  color: var(--accent);
+}
+
+.item-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.item-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.item-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(160,132,232,.35);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+.item-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+}
+
+.item-title {
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  line-height: 1.1;
+  color: var(--text);
+  transition: color .15s;
+  margin-bottom: 10px;
+}
+
+.item-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  opacity: .45;
+  max-width: 440px;
+}
+
+.item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.item-arrow {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: transform .2s, color .15s;
+  margin-top: 4px;
+}
+.item-preset {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* preset color dots */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ── SOCIAL LINKS ── */
+.social-section {
+  padding-bottom: 80px;
+}
+.social-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.social-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .15s;
+}
+.social-link:hover { color: var(--accent); }
+.social-link::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 48px;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-brand {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.footer-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 540px) {
+  .item-right { display: none; }
+  .item-desc { display: none; }
+  .itinerary-item { padding: 22px 0; }
+  .social-links { gap: 16px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- coordinate grid background -->
+<div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-eyebrow">JANDASSS.ROUTE</div>
+    <h1 class="header-logo">[JR]<br><span>Field Notes</span><br>&amp; Urban Routes</h1>
+    <p class="header-bio">
+      Operational guides for independent travel.<br>
+      No clutter. Just data, coordinates and places.
+    </p>
+  </header>
+
+  <!-- ── ITINERARIES ── -->
+  <main>
+    <div class="section-label">// Itineraries</div>
+    <nav class="itinerary-list" aria-label="Itinerary list">
+
+            <!-- BALTIC COAST -->
+
+      <a class="itinerary-item"
+         href="Poland - September/index.html"
+         target="_blank"
+         rel="noopener">
+        <div class="item-inner">
+          <div>
+            <div class="item-meta">
+              <span class="item-tag">[INDUSTRIAL · COASTAL]</span>
+              <span class="item-date">SEP 11–15, 2026</span>
+            </div>
+            <div class="item-title">BALTIC COAST:<br>GDAŃSK &amp; SURROUNDINGS</div>
+            <div class="item-desc">
+              Stocznia · ECS · Falowiec · Słowiński dunes ·
+              Stutthof memorial · Zemun · Sopot pier.
+            </div>
+          </div>
+          <div class="item-right">
+            <span class="item-arrow">→</span>
+            <span class="item-preset">
+              <span class="dot" style="background:#C8924A;"></span>
+              ADMIRE
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- POLSKA: NOC ŚWIĘTYCH 
+      <a class="itinerary-item"
+         href="Poland - November/index.html"
+         target="_blank"
+         rel="noopener">
+        <div class="item-inner">
+          <div>
+            <div class="item-meta">
+              <span class="item-tag">[URBAN · AUTUMN]</span>
+              <span class="item-date">OCT 31 – NOV 3, 2025</span>
+            </div>
+            <div class="item-title">POLSKA:<br>NOC ŚWIĘTYCH</div>
+            <div class="item-desc">
+              Poznań · Bydgoszcz · Toruń — All Saints' Night at
+              Cmentarz Starofarny, mill islands, Backsteingotik.
+            </div>
+          </div>
+          <div class="item-right">
+            <span class="item-arrow">→</span>
+            <span class="item-preset">
+              <span class="dot" style="background:#A084E8;"></span>
+              VISUALIZE
+            </span>
+          </div>
+        </div>
+      </a>
+      -->
+
+      <!-- BEOGRAD NYE 
+      <a class="itinerary-item"
+         href="Serbia - New Years eve/index.html"
+         target="_blank"
+         rel="noopener">
+        <div class="item-inner">
+          <div>
+            <div class="item-meta">
+              <span class="item-tag">[BRUTALISM · NYE]</span>
+              <span class="item-date">DEC 30, 2025 – JAN 2, 2026</span>
+            </div>
+            <div class="item-title">BEOGRAD:<br>NEW YEAR'S EVE</div>
+            <div class="item-desc">
+              Novi Beograd · Genex Tower · Eastern City Gate ·
+              Zemun · Sava Promenada fireworks at midnight.
+            </div>
+          </div>
+          <div class="item-right">
+            <span class="item-arrow">→</span>
+            <span class="item-preset">
+              <span class="dot" style="background:#A084E8;"></span>
+              EXPLORE
+            </span>
+          </div>
+        </div>
+      </a>
+      -->
+
+      <!-- PLACEHOLDER — more coming -->
+      <div class="itinerary-item" style="cursor:default; opacity:.3;">
+        <div class="item-inner">
+          <div>
+            <div class="item-meta">
+              <span class="item-tag">[COMING SOON]</span>
+            </div>
+            <div class="item-title">NEXT ROUTE<br>IN PROGRESS</div>
+          </div>
+          <div class="item-right">
+            <span class="item-arrow" style="opacity:.3;">—</span>
+          </div>
+        </div>
+      </div>
+
+    </nav>
+  </main>
+
+  <div class="divider-accent"></div>
+
+  <!-- ── SOCIAL ── -->
+  <section class="social-section" aria-label="Social links">
+    <div class="section-label">// Follow</div>
+    <div class="social-links">
+      <a class="social-link"
+         href="https://instagram.com/jandasss.route"
+         target="_blank" rel="noopener">
+        Instagram
+      </a>
+      <a class="social-link"
+         href="https://tiktok.com/@jandasss.route"
+         target="_blank" rel="noopener">
+        TikTok
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-brand">JANDASSS.ROUTE</span>
+      <span class="footer-note">Urban routes &amp; architectural memory</span>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  /* ── coordinate labels on grid intersections ── */
+  (function() {
+    const container = document.getElementById('grid-bg');
+    const STEP = 80; // must match CSS grid spacing
+    const W = window.innerWidth;
+    const H = document.documentElement.scrollHeight;
+
+    // origin: top-left = 0°N 0°E, fake coords mapped to screen
+    const LAT_RANGE = 12;  // degrees latitude shown
+    const LNG_RANGE = 20;  // degrees longitude shown
+    const LAT_START = 44.0; // roughly Belgrade–Gdańsk band — Preset 02 Warm/Sunny/Heritage
+    const LNG_START = 14.0;
+
+    const cols = Math.floor(W / STEP);
+    const rows = Math.floor(H / STEP) + 2;
+
+    // only label every 4th intersection to avoid clutter
+    for (let r = 0; r <= rows; r += 4) {
+      for (let c = 0; c <= cols; c += 4) {
+        const x = c * STEP;
+        const y = r * STEP;
+
+        const lat = (LAT_START + LAT_RANGE * (1 - y / H)).toFixed(2);
+        const lng = (LNG_START + LNG_RANGE * (x / W)).toFixed(2);
+
+        // alternate: show lat on horizontal bands, lng on vertical
+        const showLat = (c % 8 === 0);
+        const label = showLat ? `${lat}°N` : `${lng}°E`;
+
+        const el = document.createElement('span');
+        el.className = 'coord-label';
+        el.textContent = label;
+        el.style.left = (x + 3) + 'px';
+        el.style.top  = (y + 3) + 'px';
+        container.appendChild(el);
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "export-itinerary",
+  "version": "1.0.0",
+  "description": "tool to extract carosel images from html",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "export-png.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^25.8.0"
+  }
+}
