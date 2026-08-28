@@ -467,6 +467,41 @@ body {
     --qr-url: url('img/qrcode.png')
   }
 
+/* ── SCROLL TO TOP ── */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  width: 52px;
+  height: 52px;
+  background: var(--page-accent);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  box-shadow: 0 4px 24px rgba(0,0,0,.4);
+}
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroll-top:hover {
+  transform: translateY(-3px);
+}
+.scroll-top svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+@media (max-width: 540px) {
+  .scroll-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+}
 
 /* Override body styles from original */
 body { background: var(--page-bg) !important; }
@@ -890,6 +925,23 @@ body { background: var(--page-bg) !important; }
   });
 })();
 </script>
-
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 15V5M10 5L5 10M10 5L15 10" stroke="var(--page-bg)" stroke-width="2" stroke-linecap="square"/>
+  </svg>
+</button>
+ 
+<script>
+/* scroll-to-top visibility */
+(function() {
+  const btn = document.getElementById('scrollTop');
+  if (!btn) return;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) { btn.classList.add('visible'); }
+    else { btn.classList.remove('visible'); }
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>

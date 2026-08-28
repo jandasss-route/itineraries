@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Upper Swabian Baroque — Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    /* ── PRESET 02 — WARM / SUNNY / HERITAGE ── */
+    --bg:         #111315;
+    --bg2:        #141416;
+    --text:       #F4F4F5;
+    --text-muted: #8A6A50;
+    --accent:     #E07A5F;
+    --accent2:    #D00000;
+    background-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex; flex-direction: column;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
+  .counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text-muted);
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 88px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.0;
+    color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace;
+    font-size: 68px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.05;
+    color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.1;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    color: var(--text); opacity: .5; letter-spacing: .04em;
+  }
+
+  .row { display: flex; align-items: center; justify-content: space-between; }
+  .col { display: flex; flex-direction: column; }
+  .gap-16 { gap: 16px; }
+  .gap-24 { gap: 24px; }
+  .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+
+  .divider        { width:100%; height:1px; background:var(--accent); opacity:.3; }
+  .divider-strong { width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  .photo1 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/1.jpg'));
+    background-size: cover; background-position: center;
+    position: absolute; top:0; left:0; right:0;
+  }
+  .photo2 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/3.jpg'));
+    background-size: cover; background-position: center;
+    position: absolute; top:0; left:0; right:0;
+  }
+  .photo3 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/4.jpg'));
+    background-size: cover; background-position: center;
+    position: absolute; top:0; left:0; right:0;
+  }
+  .photo4 {
+    background-color: #1A1208;
+    background-image: var(--photo-url, url('img/5.jpg'));
+    background-size: cover; background-position: center;
+    position: absolute; top:0; left:0; right:0;
+  }
+  .photo-label {
+    position: absolute; top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(224,122,95,.3); text-align: center;
+    pointer-events: none; white-space: nowrap;
+  }
+  .overlay { position: absolute; bottom:0; left:0; right:0; pointer-events: none; }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex:1; }
+  .field-cell {
+    border:1px solid rgba(224,122,95,.2); padding:24px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .field-label {
+    font-family:'Space Mono',monospace; font-size:16px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  }
+  .field-value {
+    font-family:'Space Mono',monospace; font-size:22px; font-weight:700;
+    color:var(--text); line-height:1.4;
+  }
+
+  .budget-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 0; border-bottom: 1px solid rgba(224,122,95,.15); gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(224,122,95,.15); }
+  .budget-label { font-family:'Inter',sans-serif; font-size:24px; font-weight:400; color:var(--text); opacity:.8; flex:1; }
+  .budget-amount { font-family:'Space Mono',monospace; font-size:26px; font-weight:700; color:var(--accent); text-align:right; min-width:130px; }
+  .budget-total {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:32px 24px; background:var(--bg2);
+    border:1px solid rgba(224,122,95,.4); margin-top:16px;
+  }
+  .budget-total-label { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text); }
+  .budget-total-amount { font-family:'Space Mono',monospace; font-size:36px; font-weight:700; color:var(--accent); }
+
+  .qr-placeholder {
+    width:380px; height:380px; flex-shrink:0;
+    border:1px solid rgba(224,122,95,.4);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    background-image:var(--qr-url,url('img/qrcode.png'));
+    background-size:contain; background-repeat:no-repeat; background-position:center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 01 — COVER
+     → --photo-url: url('cover.jpg')
+     Foto consigliata: Lago di Costanza con Lindau in lontananza o Birnau sul lago
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-01">
+  <div class="photo1" style="height:1350px;">
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:900px;
+    background:linear-gradient(to top,#111315 55%,rgba(17,19,21,.7) 80%,transparent);"></div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag">[BAROQUE ROUTE]</span>
+      <span class="counter">SLIDE 01 / 09</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;
+        letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+        DEUTSCHLAND
+      </div>
+      <div class="title-display">UPPER<br>SWABIAN<br>BAROQUE</div>
+      <div class="subtitle" style="margin-top:8px;">Allgäu · Ulm · Blaubeuren · Bodensee · 4 days</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">MILANO → LINDAU · ~3H</div>
+        <div class="data-text">~€270 / PERSON</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 02 — ROUTE & PLAN
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">SLIDE 02 / 09</span>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label">4 DAYS · ROAD TRIP</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Day 1</strong> — Milano · Lindau · Wangen im Allgäu · Legau tower &amp; suspension bridge · Bad Grönenbach<br>
+        <strong>Day 2</strong> — Bad Grönenbach · Memmingen · Ulm Minster · Wiblingen Abbey<br>
+        <strong>Day 3</strong> — Blaubeuren (Blautopf) · Sigmaringen Castle · Kneipp Garten<br>
+        <strong>Day 4</strong> — Birnau Sanctuary · Lake Constance · Return via Switzerland · Milano
+      </div>
+    </div>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>~960 km total</strong> · 
+        Vignette not needed for Germany; <strong>Swiss vignette
+        €40</strong> required.
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">4 OVERNIGHTS · 3 REGIONS · 1 BAROQUE ROUTE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 03 — SPOTLIGHT: ULM MINSTER & WIBLINGEN
+     → --photo-url: url('ulm.jpg')
+     Foto consigliata: guglia del Duomo di Ulm o biblioteca di Wiblingen
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-03">
+  <div class="photo2" style="height:750px;">
+  </div>
+  <div class="overlay" style="height:800px;
+    background:linear-gradient(to top,#111315 58%,transparent);"></div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[GOTHIC · BAROQUE]</span>
+      <span class="counter">SLIDE 03 / 09</span>
+    </div>
+      <div class="title-large">ULM &<br>WIBLINGEN</div>
+      <div class="body-text">
+        Ulm Minster: the <strong>tallest church spire in the world</strong>
+        at 161.5m (1890), rising over the Danube bend.
+        Wiblingen Abbey Library (1744): two-storey Rococo hall
+        with <strong>trompe-l'œil frescoes</strong>, carved columns and
+        15,000 volumes — one of the finest Baroque interiors in Germany.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">WIBLINGEN · TUE–SUN 10:00–17:00 · ~€4</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 04 — SPOTLIGHT: BLAUTOPF
+     → --photo-url: url('blautopf.jpg')
+     Foto consigliata: la sorgente turchese di Blaubeuren
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-04">
+  <div class="photo3" style="height:760px;">
+  </div>
+  <div class="overlay" style="height:810px;
+    background:linear-gradient(to top,#111315 58%,transparent);"></div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+      <br>
+    <div class="row">
+      <span class="tag">[KARST]</span>
+      <span class="counter">SLIDE 04 / 09</span>
+    </div>
+      <div class="title-large">BLAUTOPF<br>BLAUBEUREN</div>
+      <div class="body-text">
+        One of Germany's largest karst springs: a circular pool
+        of intense turquoise-blue fed by an underwater cave system
+        extending <strong>over 12 km</strong> into the Swabian Alb.
+        The colour shifts with rainfall — deepest blue in dry summers.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BLAUBEUREN · FREE · 20 MIN FROM ULM</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 05 — SPOTLIGHT: SIGMARINGEN CASTLE
+     → --photo-url: url('sigmaringen.jpg')
+     Foto consigliata: il castello degli Hohenzollern sul promontorio
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-05">
+  <div class="photo4" style="height:740px;">
+  </div>
+  <div class="overlay" style="height:790px;
+    background:linear-gradient(to top,#111315 58%,transparent);"></div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[CASTLE]</span>
+      <span class="counter">SLIDE 05 / 09</span>
+    </div>
+      <div class="title-large">SCHLOSS<br>SIGMARINGEN</div>
+      <div class="body-text">
+        Ancestral seat of the <strong>House of Hohenzollern</strong>,
+        perched on a limestone cliff above the Danube.
+        Current structure rebuilt after an 1893 fire —
+        the interior holds one of Europe's largest private
+        arms collections. Below the walls: the <strong>Kneipp
+        Garten</strong> in the Prinzengarten for cold-water walking.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">TOURS DAILY 09:00–16:30 · ~€14</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 06 — LOCAL EXPERIENCE: LEGAU & KNEIPP
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[LOCAL]</span>
+      <span class="counter">SLIDE 06 / 09</span>
+    </div>
+    <div class="col gap-24">
+      <div class="title-large">TWO<br>LOCAL RITUALS</div>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label">DAY 1 — LEGAU</div>
+      <div class="body-text">
+        Aussichtsturm mit Hängebrücke — a wooden watchtower
+        and suspension bridge over the Iller gorge.
+        <strong>A Sunday outing spot for locals</strong>, not a tourist site.
+        The bridge sways. The gorge drops. Free entry.
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="col gap-24">
+      <div class="section-label">DAY 3 — SIGMARINGEN</div>
+      <div class="body-text">
+        Kneipp Garten in the Prinzengarten: stone basins of
+        cold running water, barefoot paths and aromatic sections.
+        Sebastian Kneipp's cold-water therapy — a <strong>German
+        wellness tradition since 1850</strong>. Free, open access,
+        castle walls rising behind you.
+      </div>
+    </div>
+    <div class="mt-auto">
+      <div class="data-text">BOTH FREE · BOTH GENUINELY LOCAL</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 07 — FIELD NOTES
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-07">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">SLIDE 07 / 09</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">CAR</div>
+        <div class="field-value">~960 km total<br></div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">FUEL</div>
+        <div class="field-value">~€2.10/L (DE)<br>~67 L consumed<br>~€140 total</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">VIGNETTE</div>
+        <div class="field-value">Germany: free<br>Switzerland: €40<br>Buy online e-vignette</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">EUR<br>Card everywhere<br>No cash needed</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">12–20°C<br>Rain possible<br>Layered jacket</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APPS</div>
+        <div class="field-value">Google Maps<br>Park4Night<br>Komoot (hikes)</div>
+      </div>
+    </div>
+    <br>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">SWISS VIGNETTE MANDATORY · €40</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 08 — BUDGET
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[BUDGET]</span>
+      <span class="counter">SLIDE 08 / 09</span>
+    </div>
+    <div class="col gap-16">
+      <div class="title-large">4-DAY<br>BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif;font-size:22px;
+        color:var(--text);opacity:.45;letter-spacing:.04em;">
+        Estimated per person, group of 2 · road trip from Milano
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="budget-row">
+        <div class="budget-label">Fuel (~960 km · €2.10/L)</div>
+        <div class="budget-amount">~ € 70</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Swiss vignette</div>
+        <div class="budget-amount">€ 20</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation (3 nights B&B)</div>
+        <div class="budget-amount">~ € 120</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food & drinks (4 days)</div>
+        <div class="budget-amount">~ € 100</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Entries (Wiblingen, Sigmaringen…)</div>
+        <div class="budget-amount">~ € 20</div>
+      </div>
+      <div class="budget-total">
+        <div class="budget-total-label">TOTAL / PERSON</div>
+        <div class="budget-total-amount">~ € 330</div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">JANDASSS.ROUTE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SLIDE 09 — QR MAP
+     → --qr-url: url('qr-algovia.png') quando hai il QR
+══════════════════════════════════════════════════ -->
+<div class="slide" id="slide-09">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[MAP]</span>
+      <span class="counter">SLIDE 09 / 09</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:48px;">
+      <div class="col gap-16">
+        <div class="title-large">SCAN<br>THE MAP</div>
+        <div class="body-text">
+          Every stop, castle and karst spring
+          from this route saved on Google Maps.
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:48px;">
+        <div class="qr-placeholder">
+          <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;
+            letter-spacing:.12em;text-transform:uppercase;
+            color:rgba(224,122,95,.35);text-align:center;line-height:1.6;">
+          </div>
+        </div>
+        <div class="col gap-24" style="flex:1;">
+          <div class="data-text">UPPER SWABIAN<br>BAROQUE ROUTE</div>
+          <div class="divider"></div>
+          <div class="body-text" style="font-size:22px;">
+            Allgäu · Ulm · Blaubeuren<br>
+            Sigmaringen · Bodensee<br>
+            4 days from Milano
+          </div>
+          <div class="body-text" style="font-size:20px;opacity:.5;">
+            Swiss vignette: buy<br>
+            online at via.admin.ch <br>
+            Don't skip Wiblingen.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider"></div>
+      <div class="row">
+        <div class="data-text">JANDASSS.ROUTE</div>
+        <div class="counter">@jandasss.route</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

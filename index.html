@@ -355,6 +355,41 @@ footer {
   * { transition: none !important; }
 }
 
+  /* ── SCROLL TO TOP ── */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  width: 52px;
+  height: 52px;
+  background: var(--accent);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  box-shadow: 0 4px 24px rgba(0,0,0,.4);
+}
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroll-top:hover {
+  transform: translateY(-3px);
+}
+.scroll-top svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+@media (max-width: 540px) {
+  .scroll-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+}
 </style>
 </head>
 <body>
@@ -394,7 +429,7 @@ footer {
             <div class="item-title">BALTIC COAST:<br>GDAŃSK &amp; SURROUNDINGS</div>
             <div class="item-desc">
               Stocznia · ECS · Falowiec · Słowiński dunes ·
-              Stutthof memorial · Zemun · Sopot pier.
+              Stutthof memorial · Sopot pier.
             </div>
           </div>
           <div class="item-right">
@@ -402,6 +437,33 @@ footer {
             <span class="item-preset">
               <span class="dot" style="background:#C8924A;"></span>
               ADMIRE
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- GERMANY COAST -->
+
+      <a class="itinerary-item"
+         href="Germany - October/index.html"
+         target="_blank"
+         rel="noopener">
+        <div class="item-inner">
+          <div>
+            <div class="item-meta">
+              <span class="item-tag">[UPPER SWABIAN · AUTUMN]</span>
+              <span class="item-date">SEP 11–15, 2026</span>
+            </div>
+            <div class="item-title">UPPER SWABIAN:<br>BAROQUE roadtrip</div>
+            <div class="item-desc">
+              Allgäu · Memmingen · Ulm · Blaubeuren · Bodensee · Kneipp Garten.
+            </div>
+          </div>
+          <div class="item-right">
+            <span class="item-arrow">→</span>
+            <span class="item-preset">
+              <span class="dot" style="background:#E07A5F;"></span>
+              see
             </span>
           </div>
         </div>
@@ -550,6 +612,23 @@ footer {
     }
   })();
 </script>
-
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 15V5M10 5L5 10M10 5L15 10" stroke="var(--bg)" stroke-width="2" stroke-linecap="square"/>
+  </svg>
+</button>
+ 
+<script>
+/* scroll-to-top visibility */
+(function() {
+  const btn = document.getElementById('scrollTop');
+  if (!btn) return;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) { btn.classList.add('visible'); }
+    else { btn.classList.remove('visible'); }
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
