@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Latvia: Amber &amp; Concrete — Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── PRESET 01 — COLD / URBAN / BRUTALIST ── */
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    --bg:         #111315;
+    --bg2:        #141416;
+    --text:       #F4F4F5;
+    --text-muted: #8A8E92;
+    --accent:     #52B788;
+    --accent2:    #2D6A4F;
+    background-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  /* ── SAFE AREA ── */
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*
+   * ── FOTO ──────────────────────────────────────────────────────
+   * Per aggiungere le foto: aggiorna il path in ogni classe .fotoN
+   * Esempio: .foto1 { background-image: url('img/foto1.jpg'); }
+   * Metti le immagini nella cartella img/ accanto all'HTML
+   * ──────────────────────────────────────────────────────────── */
+  .foto1 { background-image: url('img/foto1.jpg'); }
+  .foto2 { background-image: url('img/foto2.jpg'); }
+  .foto3 { background-image: url('img/foto3.jpg'); }
+  .foto4 { background-image: url('img/foto4.jpg'); }
+  .foto5 { background-image: url('img/foto5.jpg'); }
+  .foto6 { background-image: url('img/foto6.jpg'); }
+  .foto7 { background-image: url('img/foto7.jpg'); }
+
+  .photo-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background-color: #161A16;
+    background-size: cover;
+    background-position: center;
+  }
+  .photo-label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(82,183,136,.28);
+    text-align: center; pointer-events: none;
+    white-space: nowrap;
+  }
+  .photo-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+
+  /* ── TIPOGRAFIA ── */
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
+  .tag-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text); border: 1px solid var(--text);
+    display: inline-block; padding: 6px 16px;
+    background-color: var(--accent);
+  }
+  .counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text-muted);
+  }
+    .counter-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text);
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 88px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.0;
+    color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace;
+    font-size: 68px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.05;
+    color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.1;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--text); opacity: .5; letter-spacing: .04em;
+  }
+
+  /* ── LAYOUT ── */
+  .row  { display: flex; align-items: center; justify-content: space-between; }
+  .col  { display: flex; flex-direction: column; }
+  .gap-16 { gap: 16px; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
+  .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+
+  .divider        { width:100%; height:1px; background:var(--accent); opacity:.28; }
+  .divider-strong { width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  /* ── FIELD NOTES ── */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex:1; }
+  .field-cell {
+    border: 1px solid rgba(82,183,136,.18); padding: 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .field-label {
+    font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+  }
+  .field-value {
+    font-family: 'Space Mono', monospace; font-size: 21px; font-weight: 700;
+    color: var(--text); line-height: 1.4;
+  }
+
+  /* ── BUDGET ── */
+  .budget-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0; border-bottom: 1px solid rgba(82,183,136,.14); gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(82,183,136,.14); }
+  .budget-label { font-family:'Inter',sans-serif; font-size:23px; font-weight:400; color:var(--text); opacity:.8; flex:1; }
+  .budget-amount { font-family:'Space Mono',monospace; font-size:24px; font-weight:700; color:var(--accent); text-align:right; min-width:160px; }
+  .budget-total {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 24px; background:var(--bg2);
+    border:1px solid rgba(82,183,136,.38); margin-top:14px;
+  }
+  .budget-total-label { font-family:'Space Mono',monospace; font-size:20px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text); }
+  .budget-total-amount { font-family:'Space Mono',monospace; font-size:34px; font-weight:700; color:var(--accent); }
+
+  /* ── QR ── */
+  .qr-box {
+    border: 1px solid rgba(82,183,136,.38);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    background-image: var(--qr-url, url('img/qrcode.png'));
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+  }
+  .qr-label {
+    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(82,183,136,.32); text-align: center; line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 01 — COVER
+     foto1 → panoramica Vecrīga o riva Daugava
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-01">
+  <div class="photo-bg foto1" style="height:1350px;">
+</div>
+  <div style="
+    position:absolute; bottom:0; left:0; right:0; height:900px;
+    background:linear-gradient(to top,#111315 55%,rgba(17,19,21,.75) 80%,transparent);">
+  </div>
+  <div class="safe col">
+          <div class="row">
+      <span class="tag-inverted">[BALTIC ROUTE]</span>
+      <span class="counter-inverted">SLIDE 01 / 09</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;">
+
+      <div style="
+        font-family:'Space Mono',monospace; font-size:22px; font-weight:700;
+        letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">
+        LATVIJA
+      </div>
+      <div class="title-display">AMBER<br>&amp; CON-<br>CRETE</div>
+      <div class="subtitle" style="margin-top:8px;">Riga · Sigulda · Rundāle · Ķemeri · Jūrmala · 6 days</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">BGY → RIX · OCT 10</div>
+        <div class="data-text">~€557–692 / PERSON</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 02 — ROUTE & PLAN
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">SLIDE 02 / 09</span>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label" style="font-size:26px;">6 DAYS · 5 NIGHTS</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Oct 10</strong> — BGY→RIX · Bus 22 · Vecrīga · Central Market<br>
+        <strong>Oct 11</strong> — Car pickup · Līgatne Soviet Bunker · Sigulda Castle · Gūtmaņa Cave<br>
+        <strong>Oct 12</strong> — Rundāle Palace · Jelgava · Wild horses on Pils Island<br>
+        <strong>Oct 13</strong> — Ķemeri Bog boardwalk · Ložmetējkalns tower · Jūrmala<br>
+        <strong>Oct 14</strong> — Amber hunting on beach · Jomas iela · Pirts sauna<br>
+        <strong>Oct 15</strong> — Drive to RIX · Return car by 11:30 · Fly home 13:50
+      </div>
+    </div>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <div class="body-text">
+        Car Oct 11–15 (RIX airport) · Toyota Yaris ·
+        <strong>Book Līgatne bunker tour in advance</strong> — limited slots
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">1 BUNKER · 1 BOG · 1 BAROQUE PALACE · 1 AMBER COAST</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 03 — SPOTLIGHT: VECRĪGA & CENTRAL MARKET
+     foto2 → Melngalvju nams, Trīs brāļi o hangar del mercato
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-03">
+  <div class="photo-bg foto2" style="height:750px;"></div>
+  <div class="photo-overlay" style="height:800px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag">[OLD TOWN]</span>
+      <span class="counter">SLIDE 03 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">VECRĪGA<br>&amp; MARKET</div>
+      <div class="body-text">
+        <strong>Melngalvju nams</strong>: Gothic-Renaissance guildhall
+        on Town Hall Square, rebuilt after WWII bombing.
+        <strong>Trīs brāļi</strong>: the three oldest stone houses in Riga.
+        Dinner at <strong>Rīgas Centrāltirgus</strong> — five repurposed
+        Zeppelin hangars. Try rupjmaize, herrings and cumin cheese.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BUS 22 FROM RIX · ~30 MIN · ~€2</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 04 — SPOTLIGHT: LĪGATNE BUNKER & SIGULDA
+     foto3 → ingresso del bunker o Castello di Sigulda
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-04">
+  <div class="photo-bg foto3" style="height:760px;"></div>
+  <div class="photo-overlay" style="height:810px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+    <div class="row">
+      <span class="tag">[COLD WAR]</span>
+      <span class="counter">SLIDE 04 / 09</span>
+    </div>
+      <div class="title-large">LĪGATNE BUNKER & <br> SIGULDA Castle</div>
+      <div class="body-text">
+        Built in the 1980s for the Soviet Latvian party elite.
+        Original furniture, red phones and maps still in place.
+        Guided tour only — book ahead. Afternoon: Sigulda's
+        <strong>Livonian Order Castle</strong> and <strong>Gūtmaņa ala</strong>,
+        Latvia's largest cave with centuries of inscriptions carved into the sandstone.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BUNKER GUIDED TOUR · BOOK AHEAD · ~€12</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 05 — SPOTLIGHT: RUNDĀLE PALACE
+     foto4 → facciata o giardini formali di Rundāle
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-05">
+  <div class="photo-bg foto4" style="height:740px;"></div>
+  <div class="photo-overlay" style="height:790px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[BAROQUE]</span>
+      <span class="counter">SLIDE 05 / 09</span>
+    </div>
+      <div class="title-large">RUNDĀLE<br>PILS</div>
+      <div class="body-text">
+        The "Versailles of the Baltics" — designed by
+        <strong>Bartolomeo Rastrelli</strong> (same architect as St Petersburg's
+        Winter Palace) for the Duke of Courland, 1736.
+        76 rooms, Rococo state halls, formal French garden.
+        Then Jelgava Palace on its island and
+        <strong>wild horses roaming free</strong> along the Lielupe river bend.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">RUNDĀLE · DAILY 10:00–18:00 · ~€10</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 06 — SPOTLIGHT: ĶEMERI BOG
+     foto5 → passerelle in legno nella torbiera mattutina
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="photo-bg foto5" style="height:760px;"></div>
+  <div class="photo-overlay" style="height:810px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[NATIONAL PARK]</span>
+      <span class="counter">SLIDE 06 / 09</span>
+    </div>
+      <div class="title-large">ĶEMERI<br>BOG</div>
+      <div class="body-text">
+        Wooden boardwalks over a raised peat bog —
+        mosses, dwarf pines and small teal lakes stretching flat
+        to the horizon. Go before 09:00: October fog
+        sits low and still. <strong>Ložmetējkalns</strong>: 27-metre
+        wooden lookout tower with 360° views over the Ķemeri
+        reserve forest from above the canopy.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">ĶEMERI NP · FREE ENTRY · GO EARLY</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 07 — LOCAL: AMBER & PIRTS
+     foto6 → spiaggia di Jūrmala o bagnasciuga con alghe
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-07">
+  <div class="photo-bg foto6" style="height:660px;"></div>
+  <div class="photo-overlay" style="height:720px;
+    background:linear-gradient(to top,#111315 56%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="col gap-24 mt-auto">
+          <div class="row">
+      <span class="tag">[LOCAL]</span>
+      <span class="counter">SLIDE 07 / 09</span>
+    </div>
+      <div class="col gap-16">
+        
+        <div class="section-label">DZINTARS — AMBER</div>
+        <div class="body-text" style="font-size:23px;">
+          October storms push amber ashore. Search the dark seaweed
+          line at the watermark. Real amber is <strong>warm to the touch</strong>
+          and glows green-yellow under UV. Never cold like a stone.
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="col gap-16">
+        <div class="section-label">PIRTS — LATVIAN SAUNA</div>
+        <div class="body-text" style="font-size:23px;">
+          60–70°C steam sauna with birch branches (<em>slotiņa</em>)
+          for body massage, followed by a cold plunge.
+          Latvia's answer to the Finnish sauna — available at Jūrmala spa centres.
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">JŪRMALA · MAJORI QUARTER · FREE BEACH</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 08 — FIELD NOTES
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">SLIDE 08 / 09</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">FLIGHT</div>
+        <div class="field-value">Ryanair<br>BGY↔RIX<br>~€179/person</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CAR</div>
+        <div class="field-value">Oct 11–15<br>Yaris · ~€56<br>+ €40 fuel</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">EUR<br>Card everywhere<br>ATM if needed</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">6–12°C<br>Rain likely<br>Waterproof !</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APPS</div>
+        <div class="field-value">Bolt (taxi)<br>Bus 22 (RIX)<br>Google Maps</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">LANGUAGE</div>
+        <div class="field-value">Latvian<br>Russian (older)<br>English in cities</div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <br>
+      <div class="divider-strong"></div>
+      <div class="data-text">UV TORCH FOR AMBER HUNTING AT NIGHT</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 09 — BUDGET + QR MAP
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-09">
+  <div class="safe col gap-28">
+    <div class="row">
+      <span class="tag">[BUDGET · MAP]</span>
+      <span class="counter">SLIDE 09 / 09</span>
+    </div>
+    <div class="col gap-12">
+      <br>
+      <div class="title-medium">6-DAY<br>BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif;font-size:20px;
+        color:var(--text);opacity:.38;letter-spacing:.04em;">
+        <br>Per person · all included
+      </div>
+      <br>
+    </div>
+    <div class="col">
+      <div class="budget-row">
+        <div class="budget-label">Ryanair flights A/R</div>
+        <div class="budget-amount">€ 179</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Car rental + fuel (½)</div>
+        <div class="budget-amount">€ 48</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation 5 nights (½)</div>
+        <div class="budget-amount">€ 150–185</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food &amp; drinks (6 days)</div>
+        <div class="budget-amount">€ 140–190</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Entries &amp; activities</div>
+        <div class="budget-amount">€ 40–55</div>
+      </div>
+      <div class="budget-total">
+        <div class="budget-total-label">TOTAL / PERSON</div>
+        <div class="budget-total-amount">€ 557–657</div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:32px; margin-top:auto;">
+      <div class="qr-box" style="width:250px; height:250px; flex-shrink:0;">
+        <div class="qr-label"></div>
+      </div>
+      <div class="col gap-16" style="flex:1;">
+        <div class="data-text">LATVIJA<br>AMBER &amp; CONCRETE</div>
+        <div class="divider"></div>
+        <div class="body-text" style="font-size:20px; opacity:.48;">
+          Book Līgatne bunker<br>
+          guided tour in advance.<br>
+          UV torch for amber at night.
+        </div>
+        <div style="font-family:'Space Mono',monospace; font-size:16px;
+          font-weight:700; letter-spacing:.1em; color:var(--text-muted);">
+          @jandasss.route
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
