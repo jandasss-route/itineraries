@@ -262,11 +262,28 @@ body {
     color: var(--accent); border: 1px solid var(--accent);
     display: inline-block; padding: 6px 16px;
   }
+  .tag-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text); border: 1px solid var(--text);
+    background-color: var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
   .tag-hot { color: var(--accent2); border-color: var(--accent2); }
   .counter {
     font-family: 'Space Mono', monospace;
     font-size: 18px; font-weight: 700;
     letter-spacing: .1em; color: var(--text-muted);
+  }
+  .counter-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+    background-color: var(--bg);
+    padding-left: 1%;
+    padding-right: 1%;
   }
   .title-display {
     font-family: 'Space Mono', monospace;
@@ -531,11 +548,12 @@ body { background: var(--page-bg) !important; }
   <div class="overlay" style="height:810px;
     background:linear-gradient(to top,#060608 58%,transparent);"></div>
   <div class="safe col">
-    <div class="col gap-24 mt-auto">
-          <div class="row">
-      <span class="tag">[BRUTALISM]</span>
-      <span class="counter">SLIDE 03 / 09</span>
+    <div class="row">
+      <span class="tag-inverted">[BRUTALISM]</span>
+      <span class="counter-inverted">SLIDE 03 / 09</span>
     </div>
+    <div class="col gap-24 mt-auto">
+
       <div class="title-large">NOVI<br>BEOGRAD</div>
       <div class="body-text">
         Built from scratch on marshland after WWII — the most
@@ -561,11 +579,11 @@ body { background: var(--page-bg) !important; }
   <div class="overlay" style="height:790px;
     background:linear-gradient(to top,#060608 58%,transparent);"></div>
   <div class="safe col">
-    <div class="col gap-24 mt-auto">
-          <div class="row">
-      <span class="tag">[EASTERN GATE]</span>
-      <span class="counter">SLIDE 04 / 09</span>
+              <div class="row">
+      <span class="tag-inverted">[EASTERN GATE]</span>
+      <span class="counter-inverted">SLIDE 04 / 09</span>
     </div>
+    <div class="col gap-24 mt-auto">
       <div class="title-large">KAPIJA<br>BEOGRADA</div>
       <div class="body-text">
         Three brutalist towers marking the eastern entrance
@@ -619,11 +637,12 @@ body { background: var(--page-bg) !important; }
   <div class="overlay" style="height:770px;
     background:linear-gradient(to top,#060608 57%,transparent);"></div>
   <div class="safe col">
-    <div class="col gap-24 mt-auto">
-          <div class="row">
-      <span class="tag">[ZEMUN]</span>
-      <span class="counter">SLIDE 06 / 09</span>
+              <div class="row">
+      <span class="tag-inverted">[ZEMUN]</span>
+      <span class="counter-inverted">SLIDE 06 / 09</span>
     </div>
+    <div class="col gap-24 mt-auto">
+
       <div class="title-large">GARDOŠ<br>TOWER</div>
       <div class="body-text">
         Austro-Hungarian watchtower (1896) above the Zemun
