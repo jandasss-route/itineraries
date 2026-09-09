@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BERLIN: BETON BRUT — JANDASSS.ROUTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --page-bg:#111315;
+  --page-accent:#52B788;
+  --page-text:#F4F4F5;
+  --page-muted:#8A8E92;
+  --grid-line:rgba(82, 183, 136,.05);
+  --grid-coord:rgba(82, 183, 136,.15);
+  --font-mono:'Space Mono',monospace;
+}
+body{background:var(--page-bg);color:var(--page-text);font-family:var(--font-mono);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.grid-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,var(--grid-line) 0px,var(--grid-line) 1px,transparent 1px,transparent 80px);}
+.grid-bg::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,var(--grid-line) 0px,var(--grid-line) 1px,transparent 1px,transparent 80px);}
+.coord-label{position:absolute;font-family:var(--font-mono);font-size:9px;color:var(--grid-coord);letter-spacing:.08em;user-select:none;pointer-events:none;opacity:.5;}
+.site-header{position:relative;z-index:10;max-width:900px;margin:0 auto;padding:40px 24px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.back-link{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .15s;white-space:nowrap;}
+.back-link:hover{color:var(--page-accent);}
+.back-link::before{content:'←';font-size:14px;}
+.header-meta{text-align:right;}
+.header-title{font-family:var(--font-mono);font-size:clamp(13px,2vw,16px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--page-accent);line-height:1.3;}
+.header-date{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--page-muted);margin-top:4px;}
+.header-divider{position:relative;z-index:10;max-width:900px;margin:0 auto 48px;padding:0 24px;}
+.header-divider-line{width:100%;height:1px;background:var(--page-accent);opacity:.2;}
+.gallery{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:40px;padding:0 24px 80px;}
+.slide-wrap{--card-max:min(860px,calc(100vw - 48px));--scale:calc(var(--card-max) / 1080px);width:1080px;height:1350px;transform:scale(var(--scale));transform-origin:top center;margin-bottom:calc(1350px * var(--scale) - 1350px);box-shadow:0 0 0 1px rgba(82, 183, 136,.1),0 32px 80px rgba(0,0,0,.5);border-radius:2px;overflow:hidden;flex-shrink:0;}
+.slide-number{position:relative;z-index:1;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);opacity:.5;width:min(860px,calc(100vw - 48px));text-align:left;padding:0 4px;margin-bottom:-32px;}
+.site-footer{position:relative;z-index:10;max-width:900px;margin:0 auto;padding:32px 24px 48px;border-top:1px solid rgba(82, 183, 136,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-brand{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);opacity:.5;}
+.footer-ig{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--page-muted);opacity:.4;text-decoration:none;}
+.footer-ig:hover{opacity:.8;color:var(--page-accent);}
+.scroll-top{position:fixed;bottom:32px;right:32px;z-index:100;width:52px;height:52px;background:var(--page-accent);border:none;border-radius:0;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 24px rgba(0,0,0,.4);}
+.scroll-top.visible{opacity:1;pointer-events:auto;}
+.scroll-top:hover{transform:translateY(-3px);}
+.scroll-top svg{width:20px;height:20px;flex-shrink:0;}
+@media(max-width:540px){.scroll-top{bottom:20px;right:20px;width:44px;height:44px;}}
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── PRESET 01 — COLD / URBAN / BRUTALIST ── */
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    --bg:         #111315;
+    --bg2:        #141416;
+    --text:       #F4F4F5;
+    --text-muted: #8A8E92;
+    --accent:     #52B788;
+    --accent2:    #2D6A4F;
+    background-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex; flex-direction: column;
+  }
+
+  /*
+   * ── FOTO ─────────────────────────────────────────────────────
+   * Metti le immagini in img/ accanto all'HTML e rinominale foto1.jpg …
+   * foto1  → cover (Karl-Marx-Allee o BER esterno notturno)
+   * foto2  → Karl-Marx-Allee / mosaico Haus des Lehrers
+   * foto3  → Stasi Museum / uffici Mielke
+   * foto4  → Mäusebunker (local experience)
+   * foto5  → Treptower Park / Sowjetisches Ehrenmal
+   * foto6  → Marzahn Plattenbauten / Museumswohnung WBS 70
+   * foto7  → Corbusierhaus o Gedenkstätte Berliner Mauer
+   * ────────────────────────────────────────────────────────── */
+  .foto1 { background-image: url('img/foto1.jpg'); }
+  .foto2 { background-image: url('img/foto2.jpg'); }
+  .foto3 { background-image: url('img/foto3.jpg'); }
+  .foto4 { background-image: url('img/foto4.jpg'); }
+  .foto5 { background-image: url('img/foto5.jpg'); }
+  .foto6 { background-image: url('img/foto6.jpg'); }
+  .foto7 { background-image: url('img/foto7.jpg'); }
+
+  .photo-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background-color: #141816;
+    background-size: cover;
+    background-position: center;
+  }
+  .photo-label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(82,183,136,.28);
+    text-align: center; pointer-events: none;
+    white-space: nowrap;
+  }
+  .photo-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+
+  /* ── TIPOGRAFIA ── */
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
+    .tag-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text); border: 1px solid var(--text);
+    background-color: var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
+  .counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text-muted);
+  }
+    .counter-inverted {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text);
+    background-color: var(--bg);
+    border: 1px solid var(--text);
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 88px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.0;
+    color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace;
+    font-size: 68px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.05;
+    color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.1;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--text); opacity: .5; letter-spacing: .04em;
+  }
+
+  /* ── LAYOUT ── */
+  .row   { display: flex; align-items: center; justify-content: space-between; }
+  .col   { display: flex; flex-direction: column; }
+  .gap-16 { gap: 16px; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
+  .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+
+  .divider        { width:100%; height:1px; background:var(--accent); opacity:.28; }
+  .divider-strong { width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  /* ── FIELD NOTES ── */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex:1; }
+  .field-cell {
+    border: 1px solid rgba(82,183,136,.18); padding: 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .field-label {
+    font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+  }
+  .field-value {
+    font-family: 'Space Mono', monospace; font-size: 21px; font-weight: 700;
+    color: var(--text); line-height: 1.4;
+  }
+
+  /* ── BUDGET ── */
+  .budget-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0; border-bottom: 1px solid rgba(82,183,136,.14); gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(82,183,136,.14); }
+  .budget-label { font-family:'Inter',sans-serif; font-size:23px; font-weight:400; color:var(--text); opacity:.8; flex:1; }
+  .budget-amount { font-family:'Space Mono',monospace; font-size:24px; font-weight:700; color:var(--accent); text-align:right; min-width:160px; }
+  .budget-total {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 24px; background:var(--bg2);
+    border:1px solid rgba(82,183,136,.38); margin-top:14px;
+  }
+  .budget-total-label { font-family:'Space Mono',monospace; font-size:20px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text); }
+  .budget-total-amount { font-family:'Space Mono',monospace; font-size:34px; font-weight:700; color:var(--accent); }
+
+  /* ── QR ── */
+  .qr-box {
+    border: 1px solid rgba(82,183,136,.38);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    background-image: var(--qr-url, url('img/qrcode.png'));
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+  }
+  .qr-label {
+    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(82,183,136,.32); text-align: center; line-height: 1.6;
+  }
+
+body{background:var(--page-bg)!important;}
+</style>
+</head>
+<body>
+<div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="back-link" href="../index.html">JANDASSS.ROUTE</a>
+  <div class="header-meta">
+    <div class="header-title">BERLIN: BETON BRUT</div>
+    <div class="header-date">NOV 2025 · FRI–MON</div>
+  </div>
+</header>
+<div class="header-divider"><div class="header-divider-line"></div></div>
+<main class="gallery" id="gallery">
+<!-- ══════════════════════════════════════════════
+     SLIDE 01 — COVER
+     foto1 → Karl-Marx-Allee prospettica o skyline est notturno
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-01">
+  <div class="photo-bg foto1" style="height:1350px;">
+    <div class="photo-label">foto1.jpg — KARL-MARX-ALLEE OR BERLIN EAST SKYLINE</div>
+  </div>
+  <div style="
+    position:absolute; bottom:0; left:0; right:0; height:920px;
+    background:linear-gradient(to top,#111315 55%,rgba(17,19,21,.75) 80%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[URBAN · TRACE]</span>
+      <span class="counter">SLIDE 01 / 09</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;">
+      <div style="
+        font-family:'Space Mono',monospace; font-size:22px; font-weight:700;
+        letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">
+        BERLIN
+      </div>
+      <div class="title-display">BETON<br>BRUT</div>
+      <div style="
+        font-family:'Space Mono',monospace; font-size:32px; font-weight:700;
+        letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+        opacity:.7; margin-top:8px;">
+        TRACE.
+      </div>
+      <div class="subtitle" style="margin-top:12px;">DDR · Brutalismus · Stasi · Plattenbauten · Nov 2025</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">BGY → BER · 12:45</div>
+        <div class="data-text">~€353–463 / PERSON</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 02 — ROUTE & PLAN
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">SLIDE 02 / 09</span>
+    </div>
+    <div class="col gap-24">
+      <div class="section-label" style="font-size:26px;">4 DAYS · FRIEDRICHSHAIN BASE</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Day 1 (Fri)</strong> — Land 12:45 · FEX to Alexanderplatz · Karl-Marx-Allee · Stasi Museum · Volksbar<br>
+        <strong>Day 2 (Sat)</strong> — Mäusebunker · Pallasseum · St. Agnes Kirche · Zur letzten Instanz<br>
+        <strong>Day 3 (Sun)</strong> — Marzahn Plattenbauten · WBS 70 flat · Treptower Park · East Side Gallery · RAW<br>
+        <strong>Day 4 (Mon)</strong> — Gedenkstätte Berliner Mauer · Corbusierhaus · U-Bhf Rathaus Spandau · BER 20:40
+      </div>
+    </div>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <div class="body-text">
+        All transport by <strong>BVG</strong> — FEX airport express
+        (ticket ABC) on arrival and departure. Daily 24h AB
+        ticket for days 2–3. <strong>No car needed.</strong>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">1 STASI HQ · 1 BUNKER-ANIMAL · 1 SOVIET MEMORIAL · 4 U-BAHN LINES</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 03 — SPOTLIGHT: KARL-MARX-ALLEE & STASI
+     foto2 → Karl-Marx-Allee prospettiva o mosaico Haus des Lehrers
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-03">
+  <div class="photo-bg foto2" style="height:750px;">
+    <div class="photo-label">foto2.jpg — KARL-MARX-ALLEE · MOSAICO HAUS DES LEHRERS</div>
+  </div>
+  <div class="photo-overlay" style="height:800px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[DDR MONUMENT]</span>
+      <span class="counter-inverted">SLIDE 03 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">KARL-MARX-<br>ALLEE</div>
+      <div class="body-text">
+        2km of Stalinist wedding-cake architecture — the DDR's
+        showcase boulevard, built 1952–60 as a workers' triumphal
+        axis. <strong>Café Sibylle</strong> at n.72: original GDR interior,
+        small exhibition on the street's history. The mosaic on
+        <strong>Haus des Lehrers</strong> depicts socialist life in
+        ceramic tiles. Still all standing, still lived-in.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">U5 STRAUSBERGER PLATZ · CAFÉ SIBYLLE FREE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 04 — SPOTLIGHT: STASI MUSEUM
+     foto3 → uffici di Mielke o corridoi del campus Stasi
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-04">
+  <div class="photo-bg foto3" style="height:760px;">
+    <div class="photo-label">foto3.jpg — STASI MUSEUM · MIELKE'S OFFICE · CAMPUS FÜR DEMOKRATIE</div>
+  </div>
+  <div class="photo-overlay" style="height:810px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[SURVEILLANCE]</span>
+      <span class="counter-inverted">SLIDE 04 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">STASI<br>MUSEUM</div>
+      <div class="body-text">
+        The former Ministry for State Security headquarters,
+        preserved exactly as left in 1989. Erich Mielke's
+        personal office — wood panelling, rotary phone, original
+        furniture. 90,000 full-time employees who surveilled
+        one in <strong>63 East Germans</strong>. The campus is
+        open to the public. The building still unsettles.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">U5 MAGDALENENSTR. · MON–FRI 10–18 · ~€8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 05 — LOCAL EXPERIENCE: MÄUSEBUNKER
+     foto4 → facciata esterna del Mäusebunker
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-05">
+  <div class="photo-bg foto4" style="height:780px;">
+    <div class="photo-label">foto4.jpg — MÄUSEBUNKER · LICHTERFELDE · EXTERNAL FACADE</div>
+  </div>
+  <div class="photo-overlay" style="height:830px;
+    background:linear-gradient(to top,#111315 60%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[LOCAL · EXAMINE]</span>
+      <span class="counter">SLIDE 05 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">MÄUSE-<br>BUNKER</div>
+      <div class="body-text">
+        Built 1971–80 as a large-scale animal research facility —
+        the name means "mouse bunker." Raw exposed concrete,
+        angular ramps, ventilation towers like brutalist horns.
+        One of the most extreme examples of German brutalism
+        still standing. <strong>External visit only</strong> — walk the
+        perimeter and photograph from the access road.
+        Nobody else will be there.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">S25 LICHTERFELDE WEST · 12 MIN WALK · FREE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 06 — SPOTLIGHT: TREPTOWER PARK & MARZAHN
+     foto5 → Sowjetisches Ehrenmal o Plattenbauten di Marzahn
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-06">
+  <div class="photo-bg foto5" style="height:750px;">
+    <div class="photo-label">foto5.jpg — TREPTOWER PARK SOVIET MEMORIAL OR MARZAHN PLATTENBAUTEN</div>
+  </div>
+  <div class="photo-overlay" style="height:800px;
+    background:linear-gradient(to top,#111315 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[MEMORY · HOUSING]</span>
+      <span class="counter-inverted">SLIDE 06 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">MARZAHN<br>&amp; TREPTOW</div>
+      <div class="body-text">
+        Morning in <strong>Marzahn</strong>: Europe's largest Plattenbau
+        estate — prefab WBS 70 slabs housing 170,000 people.
+        The <strong>Museumswohnung</strong> is a perfectly preserved
+        1980s DDR apartment, original wallpaper and all — book ahead.
+        Afternoon: <strong>Sowjetisches Ehrenmal</strong> in Treptower Park —
+        the colossal Soviet war memorial with 7,000 soldiers buried beneath it.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">U5 COTTBUSSER PLATZ · WBS 70 BOOK IN ADVANCE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 07 — SPOTLIGHT: MAUER & CORBUSIERHAUS
+     foto6 → Gedenkstätte Berliner Mauer o Corbusierhaus
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-07">
+  <div class="photo-bg foto6" style="height:740px;">
+    <div class="photo-label">foto6.jpg — GEDENKSTÄTTE BERLINER MAUER OR CORBUSIERHAUS FACADE</div>
+  </div>
+  <div class="photo-overlay" style="height:790px;
+    background:linear-gradient(to top,#111315 57%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[WALL · BÉTON]</span>
+      <span class="counter-inverted">SLIDE 07 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">MAUER &amp;<br>CORBUSIER</div>
+      <div class="body-text">
+        <strong>Gedenkstätte Berliner Mauer</strong> (Bernauer Straße):
+        the original death strip preserved — watchtower, border
+        markers, documentation centre. Free, outdoor, devastating.
+        Then west: <strong>Corbusierhaus</strong> near Olympiastadion —
+        Le Corbusier's Unité d'Habitation in béton brut,
+        530 flats on 17 floors. Still residential.
+        Final stop: <strong>U-Bhf Rathaus Spandau</strong> — the
+        cathedral of the underground, brutalist in raw concrete.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">S1 NORDBAHNHOF · S3 OLYMPIASTADION · U7 SPANDAU</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 08 — FIELD NOTES
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">SLIDE 08 / 09</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">FLIGHT</div>
+        <div class="field-value">Ryanair<br>BGY↔BER<br>€67.50/person</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">TRANSIT</div>
+        <div class="field-value">FEX (ABC) D1+D4<br>24h AB D2+D3<br>~€45 total</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">EUR<br>Card everywhere<br>Some Imbiss cash</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">2–8°C mid-Nov<br>Thermal layers<br>Rain likely</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APPS</div>
+        <div class="field-value">BVG Fahrinfo<br>Google Maps<br>Citymapper</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">FOOD</div>
+        <div class="field-value">Volksbar (Fr)<br>Zur letzten Instanz<br>Simon-Dach-Str.</div>
+      </div>
+    </div>
+    <br>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">MUSEUMSWOHNUNG WBS 70 — BOOK AHEAD · LIMITED SLOTS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 09 — BUDGET + QR MAP
+══════════════════════════════════════════════ -->
+<div class="slide" id="slide-09">
+  <div class="safe col gap-28">
+    <div class="row">
+      <span class="tag">[BUDGET · MAP]</span>
+      <span class="counter">SLIDE 09 / 09</span>
+    </div>
+    <br>
+    <div class="col gap-12">
+      <div class="title-medium">4-DAY<br>BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif; font-size:20px;
+        color:var(--text); opacity:.38; letter-spacing:.04em;">
+        Per person · all included
+      </div>
+      <br>
+    </div>
+    <div class="col">
+      <div class="budget-row">
+        <div class="budget-label">Ryanair flights A/R</div>
+        <div class="budget-amount">€ 67.50</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">BVG transit (4 days)</div>
+        <div class="budget-amount">€ 45</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation 3 nights (½)</div>
+        <div class="budget-amount">€ 120–180</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food &amp; drinks (4 days)</div>
+        <div class="budget-amount">€ 100–140</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Entries &amp; museums</div>
+        <div class="budget-amount">€ 20–30</div>
+      </div>
+      <div class="budget-total">
+        <div class="budget-total-label">TOTAL / PERSON</div>
+        <div class="budget-total-amount">€ 353–463</div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:32px; margin-top:auto;">
+      <div class="qr-box" style="width:250px; height:250px; flex-shrink:0;">
+
+      </div>
+      <div class="col gap-16" style="flex:1;">
+        <div class="data-text">BERLIN<br>BETON BRUT</div>
+        <div class="divider"></div>
+        <div class="body-text" style="font-size:20px; opacity:.48;">
+          Book Museumswohnung<br>
+          WBS 70 in advance.<br>
+          FEX needs ABC ticket.
+        </div>
+        <div style="font-family:'Space Mono',monospace; font-size:16px;
+          font-weight:700; letter-spacing:.1em; color:var(--text-muted);">
+          @jandasss.route
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+  <span class="footer-brand">JANDASSS.ROUTE — PRESET 01 — COLD / URBAN / BRUTALIST</span>
+  <a class="footer-ig" href="https://instagram.com/jandasss.route" target="_blank" rel="noopener">@jandasss.route</a>
+</footer>
+<button class="scroll-top" id="scrollTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 15V5M10 5L5 10M10 5L15 10" stroke="var(--page-bg)" stroke-width="2" stroke-linecap="square"/>
+  </svg>
+</button>
+<script>
+(function(){
+  const c=document.getElementById('grid-bg');
+  const S=80,W=window.innerWidth,H=Math.max(document.body.scrollHeight,window.innerHeight*3);
+  for(let r=0;r<=Math.floor(H/S)+2;r+=4)for(let col=0;col<=Math.floor(W/S);col+=4){
+    const x=col*S,y=r*S;
+    const lat=(52.3+0.5*(1-y/H)).toFixed(2);
+    const lng=(13.2+0.6*(x/W)).toFixed(2);
+    const el=document.createElement('span');
+    el.className='coord-label';
+    el.textContent=(col%8===0)?lat+'°N':lng+'°E';
+    el.style.left=(x+3)+'px';el.style.top=(y+3)+'px';
+    c.appendChild(el);
+  }
+})();
+(function(){
+  const g=document.getElementById('gallery');
+  const slides=g.querySelectorAll('.slide');
+  slides.forEach((s,i)=>{
+    const lbl=document.createElement('div');
+    lbl.className='slide-number';
+    lbl.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    g.insertBefore(lbl,s);
+    const wrap=document.createElement('div');
+    wrap.className='slide-wrap';
+    s.parentNode.insertBefore(wrap,s);
+    wrap.appendChild(s);
+  });
+})();
+(function(){
+  const btn=document.getElementById('scrollTop');
+  if(!btn)return;
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400);},{passive:true});
+})();
+</script>
+</body>
+</html>
