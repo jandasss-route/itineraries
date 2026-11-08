@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZERBAIGIAN: FIRE & SILK ROAD — JANDASSS.ROUTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --page-bg:#0F0C08; --bg2: #1C1510;
+  --page-accent:#C8924A; --accent2: #8A4A1C;
+  --page-text:#F4F0E8; --text-muted: #8A7A6A;
+  --page-muted:#F4F0E8; --text-muted: #8A7A6A;
+  --grid-line:rgba(200, 146, 74,.05);
+  --grid-coord:rgba(200, 146, 74,.15);
+  --font-mono:'Space Mono',monospace;
+}
+body{background:var(--page-bg);color:var(--page-text);font-family:var(--font-mono);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.grid-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,var(--grid-line) 0px,var(--grid-line) 1px,transparent 1px,transparent 80px);}
+.grid-bg::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,var(--grid-line) 0px,var(--grid-line) 1px,transparent 1px,transparent 80px);}
+.coord-label{position:absolute;font-family:var(--font-mono);font-size:9px;color:var(--grid-coord);letter-spacing:.08em;user-select:none;pointer-events:none;opacity:.5;}
+.site-header{position:relative;z-index:10;max-width:900px;margin:0 auto;padding:40px 24px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.back-link{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .15s;white-space:nowrap;}
+.back-link:hover{color:var(--page-accent);}
+.back-link::before{content:'←';font-size:14px;}
+.header-meta{text-align:right;}
+.header-title{font-family:var(--font-mono);font-size:clamp(13px,2vw,16px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--page-accent);line-height:1.3;}
+.header-date{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--page-muted);margin-top:4px;}
+.header-divider{position:relative;z-index:10;max-width:900px;margin:0 auto 48px;padding:0 24px;}
+.header-divider-line{width:100%;height:1px;background:var(--page-accent);opacity:.2;}
+.gallery{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:40px;padding:0 24px 80px;}
+.slide-wrap{--card-max:min(860px,calc(100vw - 48px));--scale:calc(var(--card-max) / 1080px);width:1080px;height:1350px;transform:scale(var(--scale));transform-origin:top center;margin-bottom:calc(1350px * var(--scale) - 1350px);box-shadow:0 0 0 1px rgba(200, 146, 74,.1),0 32px 80px rgba(0,0,0,.5);border-radius:2px;overflow:hidden;flex-shrink:0;}
+.slide-number{position:relative;z-index:1;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);opacity:.5;width:min(860px,calc(100vw - 48px));text-align:left;padding:0 4px;margin-bottom:-32px;}
+.site-footer{position:relative;z-index:10;max-width:900px;margin:0 auto;padding:32px 24px 48px;border-top:1px solid rgba(200, 146, 74,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-brand{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--page-muted);opacity:.5;}
+.footer-ig{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--page-muted);opacity:.4;text-decoration:none;}
+.footer-ig:hover{opacity:.8;color:var(--page-accent);}
+.scroll-top{position:fixed;bottom:32px;right:32px;z-index:100;width:52px;height:52px;background:var(--page-accent);border:none;border-radius:0;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 24px rgba(0,0,0,.4);}
+.scroll-top.visible{opacity:1;pointer-events:auto;}
+.scroll-top:hover{transform:translateY(-3px);}
+.scroll-top svg{width:20px;height:20px;flex-shrink:0;}
+html { overflow-x: hidden; }
+body { overflow-x: hidden; }
+@media(max-width:540px){.scroll-top{bottom:20px;right:20px;width:44px;height:44px;}}
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0A0A0C;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 32px; padding: 40px 0 80px;
+    font-family: 'Space Mono', monospace;
+  }
+  /* ── PRESET 04 — ARID / DUST / SACRED ── */
+  .slide {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden; flex-shrink: 0;
+    --bg: #0F0C08; --bg2: #1C1510;
+    --text: #F4F0E8; --text-muted: #8A7A6A;
+    --accent: #C8924A; --accent2: #8A4A1C;
+    background-color: var(--bg);
+  }
+  .safe {
+    position: absolute;
+    top: 96px; left: 72px; right: 72px; bottom: 96px;
+    display: flex; flex-direction: column;
+  }
+  /*
+   * ── FOTO ──────────────────────────────────────────────────
+   * foto1 → cover  : Flame Towers di notte o Icherisheher skyline
+   * foto2 → slide3 : Maiden Tower / Shirvanshah Palace / vicoli
+   * foto3 → slide4 : Gobustan vulcani di fango o petroglifi
+   * foto4 → slide5 : Sheki Khan's Palace / caravanserai
+   * foto5 → slide6 : Lago Nohur invernale o Juma Mosque Shamakhi
+   * ─────────────────────────────────────────────────────── */
+  .foto1 { background-image: url('img/foto1.jpg'); }
+  .foto2 { background-image: url('img/foto2.jpg'); }
+  .foto3 { background-image: url('img/foto3.jpg'); }
+  .foto4 { background-image: url('img/foto4.jpg'); }
+  .foto5 { background-image: url('img/foto5.jpg'); }
+
+  .photo-bg {
+    position: absolute; top: 0; left: 0; right: 0;
+    background-color: #1A1208; background-size: cover; background-position: center;
+  }
+  .photo-label {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(200,146,74,.3); text-align: center;
+    pointer-events: none; white-space: nowrap;
+  }
+  .photo-overlay { position: absolute; bottom: 0; left: 0; right: 0; pointer-events: none; }
+
+  /* ── TIPO ── */
+  .tag {
+    font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    display: inline-block; padding: 6px 16px;
+  }
+  .tag-inverted {
+    font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text); border: 1px solid var(--text);
+    background-color: var(--accent); display: inline-block; padding: 6px 16px;
+  }
+  .counter {
+    font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text-muted);
+  }
+  .counter-inverted {
+    font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700;
+    letter-spacing: .1em; color: var(--text); background-color: var(--bg);
+    border: 1px solid var(--text); padding-left: 1%; padding-right: 1%;
+  }
+  .title-display {
+    font-family: 'Space Mono', monospace; font-size: 88px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.0; color: var(--text);
+  }
+  .title-large {
+    font-family: 'Space Mono', monospace; font-size: 68px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.05; color: var(--text);
+  }
+  .title-medium {
+    font-family: 'Space Mono', monospace; font-size: 50px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em; line-height: 1.1; color: var(--text);
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--accent);
+  }
+  .body-text {
+    font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 400;
+    line-height: 1.65; color: var(--text);
+  }
+  .body-text strong { font-weight: 700; }
+  .data-text {
+    font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700;
+    letter-spacing: .06em; color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 400;
+    color: var(--text); opacity: .5; letter-spacing: .04em;
+  }
+
+  /* ── LAYOUT ── */
+  .row   { display: flex; align-items: center; justify-content: space-between; }
+  .col   { display: flex; flex-direction: column; }
+  .gap-16 { gap: 16px; } .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; } .gap-48 { gap: 48px; }
+  .mt-auto { margin-top: auto; }
+  .divider        { width:100%; height:1px; background:var(--accent); opacity:.28; }
+  .divider-strong { width:100%; height:1px; background:var(--accent); opacity:.65; }
+
+  /* ── FIELD GRID ── */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+  .field-cell {
+    border: 1px solid rgba(200,146,74,.2); padding: 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .field-label {
+    font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+  }
+  .field-value {
+    font-family: 'Space Mono', monospace; font-size: 21px; font-weight: 700;
+    color: var(--text); line-height: 1.4;
+  }
+
+  /* ── BUDGET ── */
+  .budget-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0; border-bottom: 1px solid rgba(200,146,74,.14); gap: 24px;
+  }
+  .budget-row:first-child { border-top: 1px solid rgba(200,146,74,.14); }
+  .budget-label { font-family:'Inter',sans-serif; font-size:22px; font-weight:400; color:var(--text); opacity:.8; flex:1; }
+  .budget-amount { font-family:'Space Mono',monospace; font-size:23px; font-weight:700; color:var(--accent); text-align:right; min-width:140px; }
+  .budget-total {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:28px 24px; background:var(--bg2); border:1px solid rgba(200,146,74,.38); margin-top:14px;
+  }
+  .budget-total-label { font-family:'Space Mono',monospace; font-size:20px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text); }
+  .budget-total-amount { font-family:'Space Mono',monospace; font-size:34px; font-weight:700; color:var(--accent); }
+
+  /* ── QR ── */
+  .qr-box {
+    border: 1px solid var(--accent2);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+
+    background-image: var(--qr-url, url('img/qrcode.png'));
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+  }
+  .qr-label {
+    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(200,146,74,.32); text-align: center; line-height: 1.6;
+  }
+
+body{background:var(--page-bg)!important;}
+</style>
+</head>
+<body>
+<div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="back-link" href="../index.html">JANDASSS.ROUTE</a>
+  <div class="header-meta">
+    <div class="header-title">AZERBAIGIAN: FIRE & SILK ROAD</div>
+    <div class="header-date">JAN 29 – FEB 3, 2027</div>
+  </div>
+</header>
+<div class="header-divider"><div class="header-divider-line"></div></div>
+<main class="gallery" id="gallery">
+<!-- SLIDE 01 — COVER -->
+<div class="slide" id="slide-01">
+  <div class="photo-bg foto1" style="height:1350px;">
+    <div class="photo-label">foto1.jpg — BAKU FLAME TOWERS OR ICHERISHEHER NIGHT</div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:920px;
+    background:linear-gradient(to top,#0F0C08 55%,rgba(15,12,8,.75) 80%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag">[SILK ROAD · SEEK]</span>
+      <span class="counter">01 / 09</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;
+        letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+        AZƏRBAYCAN
+      </div>
+      <div class="title-display">FIRE<br>&amp; SILK<br>ROAD</div>
+      <div style="font-family:'Space Mono',monospace;font-size:32px;font-weight:700;
+        letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.7;margin-top:8px;">
+        SEEK.
+      </div>
+      <div class="subtitle" style="margin-top:12px;">Baku · Gabala · Sheki · Shamakhi · 6 days · Jan–Feb 2027</div>
+    </div>
+    <div class="col gap-16 mt-auto" style="margin-top:48px;">
+      <div class="divider-strong"></div>
+      <div class="row">
+        <div class="data-text">MXP → GYD · 10:45</div>
+        <div class="data-text">~€641–796 / PERSON</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 02 — ROUTE -->
+<div class="slide" id="slide-02">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[ROUTE]</span>
+      <span class="counter">02 / 09</span>
+    </div>
+    <br>
+    <div class="col gap-24">
+      <div class="section-label" style="font-size:26px;">6 DAYS · ROAD TRIP</div>
+      <div class="divider"></div>
+      <div class="body-text">
+        <strong>Jan 29</strong> — MXP→GYD 10:45 · arrive 18:25 ·
+        Baku old city · first dinner<br><br>
+        <strong>Jan 30</strong> — Icherisheher · Maiden Tower ·
+        Shirvanshah Palace · Flame Towers · opt. Gobustan<br><br>
+        <strong>Jan 31</strong> — Pick up car · drive to Gabala (220 km · 3–4h) ·
+        Lake Nohur · mountain scenery<br><br>
+        <strong>Feb 1</strong> — Gabala→Sheki (90 km · 1.5h) ·
+        Khan's Palace · caravanserai · local halva<br><br>
+        <strong>Feb 2</strong> — Sheki→Shamakhi→Baku (300 km) ·
+        Juma Mosque · return car · Baku overnight<br><br>
+        <strong>Feb 3</strong> — Transfer 04:30 · GYD→MXP 07:30 · arrive 09:45
+      </div>
+    </div>
+    <br><br>
+    <div class="col gap-16">
+      <div class="divider"></div>
+      <br>
+      <div class="body-text" style="font-size:23px;">
+        Car Jan 31→Feb 2 · <strong>winter tyres required</strong> ·
+        mountain roads may have ice · e-visa: <strong>evisa.gov.az</strong>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">4 CITIES · 1 MEDIEVAL WALLED CITY · 1 SILK ROAD PALACE</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 03 — ICHERISHEHER -->
+<div class="slide" id="slide-03">
+  <div class="photo-bg foto2" style="height:750px;">
+    <div class="photo-label">foto2.jpg — ICHERISHEHER · MAIDEN TOWER OR SHIRVANSHAH PALACE</div>
+  </div>
+  <div class="photo-overlay" style="height:800px;
+    background:linear-gradient(to top,#0F0C08 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[MEDIEVAL CITY]</span>
+      <span class="counter-inverted">03 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">ICHER-<br>ISHEHER</div>
+      <div class="body-text">
+        The walled inner city of Baku — a UNESCO World Heritage
+        site dating to the 12th century. <strong>Maiden Tower</strong>:
+        an 8-storey cylindrical fortress of uncertain origin,
+        possibly pre-Islamic. <strong>Shirvanshah Palace</strong>: last
+        residence of the Shirvanshah dynasty, built 1411–1501.
+        Sandstone alleys, carpet sellers, tea houses still in use.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BAKU OLD CITY · UNESCO · PALACE ~€3</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 04 — GOBUSTAN -->
+<div class="slide" id="slide-04">
+  <div class="photo-bg foto3" style="height:760px;">
+    <div class="photo-label">foto3.jpg — GOBUSTAN MUD VOLCANOES OR ROCK ART</div>
+  </div>
+  <div class="photo-overlay" style="height:810px;
+    background:linear-gradient(to top,#0F0C08 58%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[GOBUSTAN]</span>
+      <span class="counter-inverted">04 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">MUD<br>VOLCANOES</div>
+      <div class="body-text">
+        Azerbaijan holds <strong>more than half the world's mud
+        volcanoes</strong> — 400 out of ~700 globally. The Gobustan
+        field sits 65 km south of Baku: low grey cones bubbling
+        cold mud and methane, a lunar landscape of cracked clay.
+        Same area holds <strong>6,000 petroglyphs</strong> carved
+        between 5000 BCE and 1st century CE. Best accessed
+        via local tour or taxi from Baku.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">65 KM SOUTH OF BAKU · TAXI OR LOCAL TOUR</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 05 — SHEKI -->
+<div class="slide" id="slide-05">
+  <div class="photo-bg foto4" style="height:740px;">
+    <div class="photo-label">foto4.jpg — SHEKI KHAN'S PALACE OR CARAVANSERAI</div>
+  </div>
+  <div class="photo-overlay" style="height:790px;
+    background:linear-gradient(to top,#0F0C08 57%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[SILK ROAD]</span>
+      <span class="counter-inverted">05 / 09</span>
+    </div>
+    <div class="col gap-24 mt-auto">
+      <div class="title-large">SHEKI —<br>KHAN'S PALACE</div>
+      <div class="body-text">
+        Built 1762 without a single nail — the summer palace of
+        the Khan of Sheki. <strong>Shebeke</strong> stained-glass windows:
+        5,000 individually cut coloured pieces held by wooden
+        frames, no glue. Interior frescoes of hunting scenes
+        and geometric patterns. The adjacent <strong>caravanserai</strong>
+        (18th century) still functions as a hotel.
+        Try the local <strong>piti</strong> stew and Sheki halva.
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">SHEKI · PALACE DAILY 10:00–18:00 · ~€4</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 06 — LOCAL: GABALA + SHAMAKHI -->
+<div class="slide" id="slide-06">
+  <div class="photo-bg foto5" style="height:720px;">
+    <div class="photo-label">foto5.jpg — LAKE NOHUR GABALA OR JUMA MOSQUE SHAMAKHI</div>
+  </div>
+  <div class="photo-overlay" style="height:770px;
+    background:linear-gradient(to top,#0F0C08 56%,transparent);">
+  </div>
+  <div class="safe col">
+    <div class="row">
+      <span class="tag-inverted">[LOCAL · SEEK]</span>
+      <span class="counter-inverted">06 / 09</span>
+    </div>
+    <div class="col gap-20 mt-auto">
+      <div class="col gap-14">
+        <div class="section-label">GABALA — LAGO NOHUR</div>
+        <div class="body-text" style="font-size:23px;">
+          Mountain lake at 1,560m surrounded by winter forest.
+          In January the water is still, the air below zero,
+          the Caucasus peaks visible on clear mornings.
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="col gap-14">
+        <div class="section-label">SHAMAKHI — JUMA MOSQUE</div>
+        <div class="body-text" style="font-size:23px;">
+          One of the oldest mosques in the Caucasus, originally
+          built 743 CE. Current structure 1860. Friday prayers
+          still held — visit outside prayer times. Dress modestly.
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="data-text">BOTH FREE · MODEST DRESS AT MOSQUE</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 07 — FIELD NOTES -->
+<div class="slide" id="slide-07">
+  <div class="safe col gap-40">
+    <div class="row">
+      <span class="tag">[FIELD NOTES]</span>
+      <span class="counter">07 / 09</span>
+    </div>
+    <br>
+    <div class="field-grid">
+      <div class="field-cell">
+        <div class="field-label">FLIGHT</div>
+        <div class="field-value">AZAL direct<br>MXP↔GYD<br>€311/pax</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CAR</div>
+        <div class="field-value">Jan 31–Feb 2<br>Winter tyres req.<br>~€70–100 + fuel</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">VISA</div>
+        <div class="field-value">E-visa required<br>evisa.gov.az<br>~€27 · 3 days</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">CURRENCY</div>
+        <div class="field-value">AZN Manat<br>1€ ≈ 1.90 AZN<br>Cash rural</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">WEATHER</div>
+        <div class="field-value">Baku 4–8°C<br>Gabala -3–5°C<br>Ice on roads</div>
+      </div>
+      <div class="field-cell">
+        <div class="field-label">APPS</div>
+        <div class="field-value">Maps.me offline<br>Google Maps<br>Bolt (Baku taxi)</div>
+      </div>
+    </div>
+    <br>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">APPLY E-VISA BEFORE DEPARTURE · 3 DAYS PROCESSING</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 08 — BUDGET -->
+<div class="slide" id="slide-08">
+  <div class="safe col gap-28">
+    <div class="row">
+      <span class="tag">[BUDGET]</span>
+      <span class="counter">08 / 09</span>
+    </div>
+    <br>
+    <div class="col gap-10">
+      <div class="title-medium">6-DAY<br>BREAKDOWN</div>
+      <div style="font-family:'Inter',sans-serif;font-size:20px;color:var(--text);opacity:.38;letter-spacing:.04em;">
+        <br>Per person · 2 sharing car &amp; room
+      </div>
+    </div>
+    <br>
+    <div class="col">
+      <div class="budget-row">
+        <div class="budget-label">AZAL flights A/R</div>
+        <div class="budget-amount">€ 311</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">E-visa</div>
+        <div class="budget-amount">~ € 27</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Car rental + fuel (½)</div>
+        <div class="budget-amount">€ 48–70</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Accommodation 5 nights (½)</div>
+        <div class="budget-amount">€ 100–150</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Food &amp; drinks (6 days)</div>
+        <div class="budget-amount">€ 70–100</div>
+      </div>
+      <div class="budget-row">
+        <div class="budget-label">Entries, insurance &amp; extras</div>
+        <div class="budget-amount">€ 40–65</div>
+      </div>
+      <br>
+      <div class="budget-total">
+        <div class="budget-total-label">TOTAL / PERSON</div>
+        <div class="budget-total-amount">€ 596–723</div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider-strong"></div>
+      <div class="data-text">BUDGET TARGET: €750 / PERSON</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 09 — QR MAP -->
+<div class="slide" id="slide-09">
+  <div class="safe col gap-48">
+    <div class="row">
+      <span class="tag">[MAP]</span>
+      <span class="counter">09 / 09</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:48px;">
+      <div class="col gap-16">
+        <div class="title-large">SCAN<br>THE MAP</div>
+        <div class="body-text">
+          Every stop, palace and mud volcano from this route
+          saved on Google Maps. Open, save, go.
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:48px;">
+        <div class="qr-box" style="width:360px;height:360px;flex-shrink:0;">
+        </div>
+        <div class="col gap-24" style="flex:1;">
+          <div class="data-text">AZƏRBAYCAN<br>FIRE &amp; SILK ROAD</div>
+          <div class="divider"></div>
+          <div class="body-text" style="font-size:21px;opacity:.48;">
+            E-visa: apply 3 days<br>before departure.<br>
+            Winter tyres: mandatory.
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;
+            font-weight:700;letter-spacing:.1em;color:var(--text-muted);">
+            @jandasss.route
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-auto col gap-16">
+      <div class="divider"></div>
+      <div class="row">
+        <div class="data-text">JANDASSS.ROUTE</div>
+        <div class="counter">@jandasss.route</div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+  <span class="footer-brand">JANDASSS.ROUTE — PRESET 04 — ARID / DUST / SACRED</span>
+  <a class="footer-ig" href="https://instagram.com/jandasss.route" target="_blank" rel="noopener">@jandasss.route</a>
+</footer>
+<button class="scroll-top" id="scrollTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 15V5M10 5L5 10M10 5L15 10" stroke="var(--page-bg)" stroke-width="2" stroke-linecap="square"/>
+  </svg>
+</button>
+<script>
+(function(){
+  var c=document.getElementById('grid-bg');
+  var S=80,W=window.innerWidth,H=Math.max(document.body.scrollHeight,window.innerHeight*3);
+  for(var r=0;r<=Math.floor(H/S)+2;r+=4){
+    for(var col=0;col<=Math.floor(W/S);col+=4){
+      var x=col*S,y=r*S;
+      var lat=(38.5+2.5*(1-y/H)).toFixed(2);
+      var lng=(45.5+5.0*(x/W)).toFixed(2);
+      var el=document.createElement('span');
+      el.className='coord-label';
+      el.textContent=(col%8===0)?lat+'°N':lng+'°E';
+      el.style.left=(x+3)+'px';el.style.top=(y+3)+'px';
+      c.appendChild(el);
+    }
+  }
+})();
+(function(){
+  var g=document.getElementById('gallery');
+  var slides=g.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var lbl=document.createElement('div');
+    lbl.className='slide-number';
+    lbl.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    g.insertBefore(lbl,s);
+    var wrap=document.createElement('div');
+    wrap.className='slide-wrap';
+    s.parentNode.insertBefore(wrap,s);
+    wrap.appendChild(s);
+  });
+})();
+(function(){
+  var btn=document.getElementById('scrollTop');
+  if(!btn)return;
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>400);},{passive:true});
+})();
+</script>
+</body>
+</html>
